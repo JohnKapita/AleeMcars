@@ -59,7 +59,7 @@
             color: #333;
         }
         
-        input {
+        input, textarea, select {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
@@ -68,9 +68,14 @@
             transition: border-color 0.3s;
         }
         
-        input:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #e74c3c;
+        }
+        
+        textarea {
+            height: 80px;
+            resize: vertical;
         }
         
         .button {
@@ -317,15 +322,6 @@
             padding: 15px 0; 
         }
         
-        .form-table input, 
-        .form-table select, 
-        .form-table textarea { 
-            width: 100%; 
-            padding: 8px 10px; 
-            border: 1px solid #dcdcde; 
-            border-radius: 4px; 
-        }
-        
         .button-admin { 
             background: #2271b1; 
             color: white; 
@@ -334,6 +330,7 @@
             border-radius: 3px; 
             cursor: pointer; 
             text-decoration: none; 
+            margin: 2px;
         }
         
         .button-admin:hover { 
@@ -346,6 +343,32 @@
         
         .button-danger { 
             background: #d63638; 
+        }
+        
+        .button-success {
+            background: #46b450;
+        }
+        
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: #e74c3c;
         }
         
         @media (max-width: 768px) {
@@ -560,6 +583,18 @@
                                                 </select>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th><label for="car-image">Car Image</label></th>
+                                            <td>
+                                                <div class="file-upload" id="image-upload-area">
+                                                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #666; margin-bottom: 10px;"></i>
+                                                    <div>Click to upload car image</div>
+                                                    <div style="font-size: 0.8rem; color: #999; margin-top: 5px;">JPG, PNG, GIF up to 5MB</div>
+                                                    <input type="file" id="car-image-file" accept="image/*" style="display: none;">
+                                                </div>
+                                                <img id="image-preview" class="image-preview" alt="Image preview">
+                                            </td>
+                                        </tr>
                                     </table>
                                     <div style="margin-top: 20px;">
                                         <button type="submit" class="button-admin button-primary" id="car-submit-btn">Add Vehicle</button>
@@ -586,13 +621,51 @@
                         <div class="admin-page" id="services-page">
                             <div class="page-header">
                                 <h1>Manage Services</h1>
+                                <button class="button-admin button-primary" id="add-service-btn">Add New Service</button>
                             </div>
                             
-                            <div class="dashboard-widget">
-                                <div class="widget-header">Current Services</div>
-                                <div class="widget-content">
-                                    <div id="admin-services-list">
-                                        <!-- Services will appear here -->
+                            <!-- Service Form -->
+                            <div id="service-form-container" style="display: none; background: white; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+                                <form id="service-form">
+                                    <table class="form-table">
+                                        <tr>
+                                            <th><label for="service-title">Service Title</label></th>
+                                            <td><input type="text" id="service-title" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="service-description">Description</label></th>
+                                            <td><textarea id="service-description" required></textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="service-icon">Icon</label></th>
+                                            <td>
+                                                <select id="service-icon" required>
+                                                    <option value="🚗">Car - 🚗</option>
+                                                    <option value="💰">Money - 💰</option>
+                                                    <option value="🔧">Tools - 🔧</option>
+                                                    <option value="🎯">Target - 🎯</option>
+                                                    <option value="⚡">Lightning - ⚡</option>
+                                                    <option value="🛡️">Shield - 🛡️</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 20px;">
+                                        <button type="submit" class="button-admin button-primary" id="service-submit-btn">Add Service</button>
+                                        <button type="button" class="button-admin" id="cancel-service-form">Cancel</button>
+                                    </div>
+                                    <input type="hidden" id="editing-service-id" value="">
+                                </form>
+                            </div>
+                            
+                            <!-- Services List -->
+                            <div id="services-list-container">
+                                <div class="dashboard-widget">
+                                    <div class="widget-header">Current Services</div>
+                                    <div class="widget-content">
+                                        <div id="admin-services-list">
+                                            <!-- Services will appear here -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -602,13 +675,38 @@
                         <div class="admin-page" id="financing-page">
                             <div class="page-header">
                                 <h1>Manage Financing Options</h1>
+                                <button class="button-admin button-primary" id="add-financing-btn">Add New Option</button>
                             </div>
                             
-                            <div class="dashboard-widget">
-                                <div class="widget-header">Current Financing Options</div>
-                                <div class="widget-content">
-                                    <div id="admin-financing-list">
-                                        <!-- Financing options will appear here -->
+                            <!-- Financing Form -->
+                            <div id="financing-form-container" style="display: none; background: white; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+                                <form id="financing-form">
+                                    <table class="form-table">
+                                        <tr>
+                                            <th><label for="financing-title">Option Title</label></th>
+                                            <td><input type="text" id="financing-title" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="financing-description">Description</label></th>
+                                            <td><textarea id="financing-description" required></textarea></td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 20px;">
+                                        <button type="submit" class="button-admin button-primary" id="financing-submit-btn">Add Option</button>
+                                        <button type="button" class="button-admin" id="cancel-financing-form">Cancel</button>
+                                    </div>
+                                    <input type="hidden" id="editing-financing-id" value="">
+                                </form>
+                            </div>
+                            
+                            <!-- Financing List -->
+                            <div id="financing-list-container">
+                                <div class="dashboard-widget">
+                                    <div class="widget-header">Current Financing Options</div>
+                                    <div class="widget-content">
+                                        <div id="admin-financing-list">
+                                            <!-- Financing options will appear here -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -624,8 +722,18 @@
         function initializeAdminDashboard() {
             // Load data from localStorage
             let cars = JSON.parse(localStorage.getItem('aleemCars')) || [];
-            let services = JSON.parse(localStorage.getItem('aleemServices')) || [];
-            let financingOptions = JSON.parse(localStorage.getItem('aleemFinancing')) || [];
+            let services = JSON.parse(localStorage.getItem('aleemServices')) || [
+                { id: 1, title: "Car Sales", description: "Wide selection of quality pre-owned vehicles", icon: "🚗" },
+                { id: 2, title: "Financing", description: "Flexible payment plans and loan assistance", icon: "💰" },
+                { id: 3, title: "Vehicle Service", description: "Professional maintenance and repairs", icon: "🔧" },
+                { id: 4, title: "Test Drives", description: "Schedule a test drive at your convenience", icon: "🎯" }
+            ];
+            let financingOptions = JSON.parse(localStorage.getItem('aleemFinancing')) || [
+                { id: 1, title: "Bank Financing", description: "Partnered with major banks for competitive rates" },
+                { id: 2, title: "In-House Financing", description: "Flexible payment plans tailored to your budget" },
+                { id: 3, title: "Trade-In Options", description: "Get the best value for your current vehicle" },
+                { id: 4, title: "Insurance", description: "Comprehensive insurance packages available" }
+            ];
 
             // Save data to localStorage
             function saveData() {
@@ -666,6 +774,14 @@
                         document.getElementById('car-form-container').style.display = 'none';
                         document.getElementById('cars-list-container').style.display = 'block';
                     }
+                    if (targetPage !== 'services') {
+                        document.getElementById('service-form-container').style.display = 'none';
+                        document.getElementById('services-list-container').style.display = 'block';
+                    }
+                    if (targetPage !== 'financing') {
+                        document.getElementById('financing-form-container').style.display = 'none';
+                        document.getElementById('financing-list-container').style.display = 'block';
+                    }
                 });
             });
 
@@ -697,12 +813,35 @@
                 }
             }
 
-            // Car Management
+            // ========== CAR MANAGEMENT ==========
             const addCarBtn = document.getElementById('add-car-btn');
             const carFormContainer = document.getElementById('car-form-container');
             const carsListContainer = document.getElementById('cars-list-container');
             const carForm = document.getElementById('car-form');
             const cancelCarForm = document.getElementById('cancel-car-form');
+            const imageUploadArea = document.getElementById('image-upload-area');
+            const carImageFile = document.getElementById('car-image-file');
+            const imagePreview = document.getElementById('image-preview');
+
+            let currentCarImageData = null;
+
+            // Image upload functionality
+            imageUploadArea.addEventListener('click', function() {
+                carImageFile.click();
+            });
+
+            carImageFile.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentCarImageData = e.target.result;
+                        imagePreview.src = currentCarImageData;
+                        imagePreview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
 
             // Show car form
             addCarBtn.addEventListener('click', function() {
@@ -723,6 +862,9 @@
                 carForm.reset();
                 document.getElementById('editing-car-id').value = '';
                 document.getElementById('car-submit-btn').textContent = 'Add Vehicle';
+                imagePreview.style.display = 'none';
+                currentCarImageData = null;
+                carImageFile.value = '';
             }
 
             // Render admin cars list
@@ -744,11 +886,16 @@
                     carDiv.style.background = car.status === 'sold' ? '#f9f9f9' : 'white';
                     
                     carDiv.innerHTML = `
-                        <div style="display: flex; justify-content: between; align-items: center;">
-                            <div style="flex: 1;">
-                                <h3 style="margin: 0 0 5px 0;">${car.make} ${car.model} (${car.year})</h3>
-                                <p style="margin: 0 0 5px 0; color: #666;">${car.mileage} • ${car.transmission} • R${car.price.toLocaleString()}</p>
-                                <p style="margin: 0; font-size: 0.9em;">${car.description || 'No description'}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; display: flex; align-items: center;">
+                                <div style="width: 80px; height: 60px; background: #f0f0f0; margin-right: 15px; display: flex; align-items: center; justify-content: center; border-radius: 4px; overflow: hidden;">
+                                    ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}" style="width:100%;height:100%;object-fit:cover;">` : '🚗'}
+                                </div>
+                                <div>
+                                    <h3 style="margin: 0 0 5px 0;">${car.make} ${car.model} (${car.year})</h3>
+                                    <p style="margin: 0 0 5px 0; color: #666;">${car.mileage} • ${car.transmission} • R${car.price.toLocaleString()}</p>
+                                    <p style="margin: 0; font-size: 0.9em;">${car.description || 'No description'}</p>
+                                </div>
                             </div>
                             <div>
                                 <span style="background: ${car.status === 'available' ? '#46b450' : '#d63638'}; color: white; padding: 5px 10px; border-radius: 3px; font-size: 0.8em;">
@@ -792,6 +939,12 @@
                     document.getElementById('car-description').value = car.description || '';
                     document.getElementById('car-status').value = car.status;
                     
+                    if (car.image) {
+                        currentCarImageData = car.image;
+                        imagePreview.src = car.image;
+                        imagePreview.style.display = 'block';
+                    }
+                    
                     document.getElementById('editing-car-id').value = carId;
                     document.getElementById('car-submit-btn').textContent = 'Update Vehicle';
                     
@@ -824,7 +977,8 @@
                     mileage: document.getElementById('car-mileage').value,
                     transmission: document.getElementById('car-transmission').value,
                     description: document.getElementById('car-description').value,
-                    status: document.getElementById('car-status').value
+                    status: document.getElementById('car-status').value,
+                    image: currentCarImageData || ''
                 };
                 
                 if (document.getElementById('editing-car-id').value) {
@@ -847,32 +1001,274 @@
                 alert(`Car ${document.getElementById('editing-car-id').value ? 'updated' : 'added'} successfully!`);
             });
 
-            // Render services and financing
-            function renderServicesAndFinancing() {
-                // Services
+            // ========== SERVICES MANAGEMENT ==========
+            const addServiceBtn = document.getElementById('add-service-btn');
+            const serviceFormContainer = document.getElementById('service-form-container');
+            const servicesListContainer = document.getElementById('services-list-container');
+            const serviceForm = document.getElementById('service-form');
+            const cancelServiceForm = document.getElementById('cancel-service-form');
+
+            // Show service form
+            addServiceBtn.addEventListener('click', function() {
+                serviceFormContainer.style.display = 'block';
+                servicesListContainer.style.display = 'none';
+                resetServiceForm();
+            });
+
+            // Cancel service form
+            cancelServiceForm.addEventListener('click', function() {
+                serviceFormContainer.style.display = 'none';
+                servicesListContainer.style.display = 'block';
+                resetServiceForm();
+            });
+
+            // Reset service form
+            function resetServiceForm() {
+                serviceForm.reset();
+                document.getElementById('editing-service-id').value = '';
+                document.getElementById('service-submit-btn').textContent = 'Add Service';
+            }
+
+            // Render services list
+            function renderServicesList() {
                 const servicesList = document.getElementById('admin-services-list');
                 servicesList.innerHTML = '';
                 
+                if (services.length === 0) {
+                    servicesList.innerHTML = '<p>No services added yet.</p>';
+                    return;
+                }
+                
                 services.forEach(service => {
-                    const div = document.createElement('div');
-                    div.style.padding = '10px 0';
-                    div.style.borderBottom = '1px solid #f0f0f1';
-                    div.innerHTML = `<strong>${service.title}</strong>: ${service.description}`;
-                    servicesList.appendChild(div);
+                    const serviceDiv = document.createElement('div');
+                    serviceDiv.style.padding = '15px';
+                    serviceDiv.style.border = '1px solid #f0f0f1';
+                    serviceDiv.style.borderRadius = '4px';
+                    serviceDiv.style.marginBottom = '10px';
+                    serviceDiv.style.background = 'white';
+                    
+                    serviceDiv.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; display: flex; align-items: center;">
+                                <div style="font-size: 2rem; margin-right: 15px;">${service.icon}</div>
+                                <div>
+                                    <h3 style="margin: 0 0 5px 0;">${service.title}</h3>
+                                    <p style="margin: 0; color: #666;">${service.description}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="button-admin edit-service" data-id="${service.id}">Edit</button>
+                                <button class="button-admin button-danger delete-service" data-id="${service.id}">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    servicesList.appendChild(serviceDiv);
+                });
+
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-service').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const serviceId = parseInt(this.getAttribute('data-id'));
+                        editService(serviceId);
+                    });
                 });
                 
-                // Financing
+                document.querySelectorAll('.delete-service').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const serviceId = parseInt(this.getAttribute('data-id'));
+                        deleteService(serviceId);
+                    });
+                });
+            }
+
+            // Edit service
+            function editService(serviceId) {
+                const service = services.find(s => s.id === serviceId);
+                if (service) {
+                    document.getElementById('service-title').value = service.title;
+                    document.getElementById('service-description').value = service.description;
+                    document.getElementById('service-icon').value = service.icon;
+                    
+                    document.getElementById('editing-service-id').value = serviceId;
+                    document.getElementById('service-submit-btn').textContent = 'Update Service';
+                    
+                    serviceFormContainer.style.display = 'block';
+                    servicesListContainer.style.display = 'none';
+                }
+            }
+
+            // Delete service
+            function deleteService(serviceId) {
+                if (confirm('Are you sure you want to delete this service?')) {
+                    services = services.filter(s => s.id !== serviceId);
+                    saveData();
+                    renderServicesList();
+                    alert('Service deleted successfully!');
+                }
+            }
+
+            // Add or update service
+            serviceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const serviceData = {
+                    id: document.getElementById('editing-service-id').value || Date.now(),
+                    title: document.getElementById('service-title').value,
+                    description: document.getElementById('service-description').value,
+                    icon: document.getElementById('service-icon').value
+                };
+                
+                if (document.getElementById('editing-service-id').value) {
+                    // Update existing service
+                    const index = services.findIndex(s => s.id === parseInt(document.getElementById('editing-service-id').value));
+                    if (index !== -1) {
+                        services[index] = serviceData;
+                    }
+                } else {
+                    // Add new service
+                    services.push(serviceData);
+                }
+                
+                saveData();
+                renderServicesList();
+                resetServiceForm();
+                serviceFormContainer.style.display = 'none';
+                servicesListContainer.style.display = 'block';
+                alert(`Service ${document.getElementById('editing-service-id').value ? 'updated' : 'added'} successfully!`);
+            });
+
+            // ========== FINANCING MANAGEMENT ==========
+            const addFinancingBtn = document.getElementById('add-financing-btn');
+            const financingFormContainer = document.getElementById('financing-form-container');
+            const financingListContainer = document.getElementById('financing-list-container');
+            const financingForm = document.getElementById('financing-form');
+            const cancelFinancingForm = document.getElementById('cancel-financing-form');
+
+            // Show financing form
+            addFinancingBtn.addEventListener('click', function() {
+                financingFormContainer.style.display = 'block';
+                financingListContainer.style.display = 'none';
+                resetFinancingForm();
+            });
+
+            // Cancel financing form
+            cancelFinancingForm.addEventListener('click', function() {
+                financingFormContainer.style.display = 'none';
+                financingListContainer.style.display = 'block';
+                resetFinancingForm();
+            });
+
+            // Reset financing form
+            function resetFinancingForm() {
+                financingForm.reset();
+                document.getElementById('editing-financing-id').value = '';
+                document.getElementById('financing-submit-btn').textContent = 'Add Option';
+            }
+
+            // Render financing list
+            function renderFinancingList() {
                 const financingList = document.getElementById('admin-financing-list');
                 financingList.innerHTML = '';
                 
+                if (financingOptions.length === 0) {
+                    financingList.innerHTML = '<p>No financing options added yet.</p>';
+                    return;
+                }
+                
                 financingOptions.forEach(option => {
-                    const div = document.createElement('div');
-                    div.style.padding = '10px 0';
-                    div.style.borderBottom = '1px solid #f0f0f1';
-                    div.innerHTML = `<strong>${option.title}</strong>: ${option.description}`;
-                    financingList.appendChild(div);
+                    const optionDiv = document.createElement('div');
+                    optionDiv.style.padding = '15px';
+                    optionDiv.style.border = '1px solid #f0f0f1';
+                    optionDiv.style.borderRadius = '4px';
+                    optionDiv.style.marginBottom = '10px';
+                    optionDiv.style.background = 'white';
+                    
+                    optionDiv.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1;">
+                                <h3 style="margin: 0 0 5px 0;">${option.title}</h3>
+                                <p style="margin: 0; color: #666;">${option.description}</p>
+                            </div>
+                            <div>
+                                <button class="button-admin edit-financing" data-id="${option.id}">Edit</button>
+                                <button class="button-admin button-danger delete-financing" data-id="${option.id}">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    financingList.appendChild(optionDiv);
+                });
+
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-financing').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const financingId = parseInt(this.getAttribute('data-id'));
+                        editFinancing(financingId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-financing').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const financingId = parseInt(this.getAttribute('data-id'));
+                        deleteFinancing(financingId);
+                    });
                 });
             }
+
+            // Edit financing
+            function editFinancing(financingId) {
+                const option = financingOptions.find(f => f.id === financingId);
+                if (option) {
+                    document.getElementById('financing-title').value = option.title;
+                    document.getElementById('financing-description').value = option.description;
+                    
+                    document.getElementById('editing-financing-id').value = financingId;
+                    document.getElementById('financing-submit-btn').textContent = 'Update Option';
+                    
+                    financingFormContainer.style.display = 'block';
+                    financingListContainer.style.display = 'none';
+                }
+            }
+
+            // Delete financing
+            function deleteFinancing(financingId) {
+                if (confirm('Are you sure you want to delete this financing option?')) {
+                    financingOptions = financingOptions.filter(f => f.id !== financingId);
+                    saveData();
+                    renderFinancingList();
+                    alert('Financing option deleted successfully!');
+                }
+            }
+
+            // Add or update financing
+            financingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const financingData = {
+                    id: document.getElementById('editing-financing-id').value || Date.now(),
+                    title: document.getElementById('financing-title').value,
+                    description: document.getElementById('financing-description').value
+                };
+                
+                if (document.getElementById('editing-financing-id').value) {
+                    // Update existing financing
+                    const index = financingOptions.findIndex(f => f.id === parseInt(document.getElementById('editing-financing-id').value));
+                    if (index !== -1) {
+                        financingOptions[index] = financingData;
+                    }
+                } else {
+                    // Add new financing
+                    financingOptions.push(financingData);
+                }
+                
+                saveData();
+                renderFinancingList();
+                resetFinancingForm();
+                financingFormContainer.style.display = 'none';
+                financingListContainer.style.display = 'block';
+                alert(`Financing option ${document.getElementById('editing-financing-id').value ? 'updated' : 'added'} successfully!`);
+            });
 
             // Add logout functionality
             document.getElementById('logout-admin').addEventListener('click', function(e) {
@@ -885,7 +1281,8 @@
             // Initialize
             updateDashboardStats();
             renderAdminCarsList();
-            renderServicesAndFinancing();
+            renderServicesList();
+            renderFinancingList();
         }
 
         // Auto-logout after 30 minutes of inactivity
