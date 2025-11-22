@@ -3,1591 +3,907 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALEEM CAR SALES | Admin Dashboard</title>
+    <title>ALEEM CAR SALES | Admin Login</title>
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
-
-        :root {
-            --primary: #e74c3c; /* Solid Red */
-            --secondary: #000000; /* Solid Black */
-            --accent: #ffffff; /* Solid White */
-            --highlight: #f1c40f; /* Yellow */
-            --light: #f9f9f9;
-            --gray: #95a5a6;
-            --sidebar-width: 200px;
-            --header-height: 60px;
-        }
-
-        body {
-            background-color: #f1f1f1;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* WordPress Admin Header */
-        #wpadminbar {
-            background: #1d2327;
-            color: #f0f0f1;
-            height: var(--header-height);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        #wpadminbar .ab-top-menu {
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        #wpadminbar .wp-admin-bar-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-        }
-
-        #wpadminbar .wp-admin-bar-logo span {
-            color: var(--primary);
-        }
-
-        #wpadminbar .quick-links {
-            display: flex;
-            margin-left: auto;
-        }
-
-        #wpadminbar .quick-links a {
-            color: #f0f0f1;
-            text-decoration: none;
-            padding: 0 10px;
-            font-size: 0.9rem;
-        }
-
-        #wpadminbar .quick-links a:hover {
-            color: var(--highlight);
-        }
-
-        #wpadminbar .user-info {
-            margin-left: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        #wpadminbar .user-info img {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        /* Admin Dashboard Layout */
-        #admin-dashboard {
-            display: flex;
-            margin-top: var(--header-height);
-            min-height: calc(100vh - var(--header-height));
-        }
-
-        /* Sidebar */
-        #admin-sidebar {
-            width: var(--sidebar-width);
-            background: #1d2327;
-            color: #f0f0f1;
-            position: fixed;
-            height: calc(100vh - var(--header-height));
-            overflow-y: auto;
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-
-        #admin-sidebar.collapsed {
-            width: 40px;
-        }
-
-        #admin-sidebar .sidebar-header {
-            padding: 20px 15px;
-            border-bottom: 1px solid #2c3338;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #admin-sidebar .sidebar-header h3 {
-            font-size: 1rem;
-            color: var(--highlight);
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        #admin-sidebar.collapsed .sidebar-header h3 {
-            display: none;
-        }
-
-        #admin-sidebar .toggle-sidebar {
-            background: none;
-            border: none;
-            color: #f0f0f1;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        #admin-sidebar.collapsed .toggle-sidebar {
-            transform: rotate(180deg);
-        }
-
-        #admin-sidebar .admin-menu {
-            list-style: none;
-            padding: 10px 0;
-        }
-
-        #admin-sidebar .admin-menu li {
-            margin-bottom: 5px;
-        }
-
-        #admin-sidebar .admin-menu a {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            color: #f0f0f1;
-            text-decoration: none;
-            transition: all 0.2s;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        #admin-sidebar .admin-menu a:hover,
-        #admin-sidebar .admin-menu a.active {
-            background: #2c3338;
-            color: var(--highlight);
-        }
-
-        #admin-sidebar .admin-menu a i {
-            margin-right: 10px;
-            font-size: 1.1rem;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        #admin-sidebar.collapsed .admin-menu a span {
-            display: none;
-        }
-
-        #admin-sidebar.collapsed .admin-menu a i {
-            margin-right: 0;
-        }
-
-        /* Main Content Area */
-        #admin-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            padding: 20px;
-            transition: all 0.3s;
-        }
-
-        #admin-content.expanded {
-            margin-left: 40px;
-        }
-
-        /* Welcome Panel */
-        .welcome-panel {
-            background: white;
-            border: 1px solid #c3c4c7;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            padding: 20px;
-        }
-
-        .welcome-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .welcome-panel h2 {
-            color: #1d2327;
-            font-size: 1.5rem;
-        }
-
-        .welcome-panel-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-
-        .welcome-panel-column p {
-            margin-bottom: 15px;
-            color: #3c434a;
-        }
-
-        .welcome-panel-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .welcome-panel-links a {
-            background: #2271b1;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 3px;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .welcome-panel-links a:hover {
-            background: #135e96;
-        }
-
-        /* Dashboard Widgets */
-        .dashboard-widgets {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .dashboard-widget {
-            background: white;
-            border: 1px solid #c3c4c7;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .widget-header {
-            background: #f6f7f7;
-            border-bottom: 1px solid #c3c4c7;
-            padding: 15px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .widget-controls a {
-            color: #787c82;
-            text-decoration: none;
-            margin-left: 10px;
-        }
-
-        .widget-controls a:hover {
-            color: #2271b1;
-        }
-
-        .widget-content {
-            padding: 15px;
-        }
-
-        /* Stats Widget */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 15px;
-            border-radius: 4px;
-        }
-
-        .stat-item.primary {
-            background: #e7f3ff;
-            border-left: 4px solid #2271b1;
-        }
-
-        .stat-item.success {
-            background: #edf7ed;
-            border-left: 4px solid #46b450;
-        }
-
-        .stat-item.warning {
-            background: #fff8e5;
-            border-left: 4px solid #ffb900;
-        }
-
-        .stat-item.danger {
-            background: #fcf0f1;
-            border-left: 4px solid #d63638;
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #646970;
-        }
-
-        /* Recent Cars Widget */
-        .recent-cars-list {
-            list-style: none;
-        }
-
-        .recent-cars-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f1;
-            display: flex;
-            align-items: center;
-        }
-
-        .recent-cars-list li:last-child {
-            border-bottom: none;
-        }
-
-        .car-thumbnail {
-            width: 50px;
-            height: 40px;
-            background: #f0f0f1;
-            margin-right: 10px;
+        
+        body { 
+            background: linear-gradient(135deg, #1d2327 0%, #000000 100%);
+            color: #333; 
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #787c82;
-            font-size: 0.8rem;
         }
-
-        .car-info {
-            flex: 1;
-        }
-
-        .car-title {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .car-meta {
-            font-size: 0.8rem;
-            color: #787c82;
-        }
-
-        .car-status {
-            font-size: 0.8rem;
-            padding: 3px 8px;
-            border-radius: 3px;
-        }
-
-        .status-available {
-            background: #edf7ed;
-            color: #46b450;
-        }
-
-        .status-sold {
-            background: #fcf0f1;
-            color: #d63638;
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .quick-action {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            background: #f6f7f7;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #3c434a;
-            transition: all 0.2s;
-        }
-
-        .quick-action:hover {
-            background: #e7f3ff;
-            color: #2271b1;
-        }
-
-        .quick-action i {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        /* Admin Pages */
-        .admin-page {
-            display: none;
+        
+        .login-container {
             background: white;
-            border: 1px solid #c3c4c7;
-            border-radius: 4px;
-            padding: 20px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
-
-        .admin-page.active {
-            display: block;
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
         }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        .logo span {
+            color: #e74c3c;
+        }
+        
+        .slogan {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f1;
-        }
-
-        .page-header h1 {
-            font-size: 1.8rem;
-            color: #1d2327;
-        }
-
-        /* Form Styles */
-        .form-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .form-table th {
             text-align: left;
-            padding: 15px 10px 15px 0;
-            width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: 600;
-            color: #3c434a;
+            color: #333;
         }
-
-        .form-table td {
-            padding: 15px 0;
-        }
-
-        .form-table input,
-        .form-table select,
-        .form-table textarea {
+        
+        input {
             width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #dcdcde;
-            border-radius: 4px;
-            font-size: 0.9rem;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
-
-        .form-table textarea {
-            height: 100px;
-            resize: vertical;
+        
+        input:focus {
+            outline: none;
+            border-color: #e74c3c;
         }
-
-        .submit {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #f0f0f1;
-        }
-
-        /* Button Styles */
+        
         .button {
-            display: inline-block;
-            background: #2271b1;
+            background: #e74c3c;
             color: white;
-            padding: 8px 15px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 3px;
-            font-size: 0.9rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
+            width: 100%;
+            transition: background-color 0.3s;
         }
-
+        
         .button:hover {
-            background: #135e96;
-            color: white;
+            background: #c0392b;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .admin-dashboard {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background: #f1f1f1;
         }
 
-        .button-primary {
-            background: #2271b1;
+        /* Admin Dashboard Styles */
+        #wpadminbar { 
+            background: #1d2327; 
+            color: #f0f0f1; 
+            height: 60px; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 9999; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 20px; 
+        }
+        
+        .wp-admin-bar-logo { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: white; 
+            text-decoration: none; 
+            margin-right: 20px; 
+        }
+        
+        .wp-admin-bar-logo span { 
+            color: #e74c3c; 
+        }
+        
+        .quick-links { 
+            display: flex; 
+            margin-left: auto; 
+        }
+        
+        .quick-links a { 
+            color: #f0f0f1; 
+            text-decoration: none; 
+            padding: 0 10px; 
+            font-size: 0.9rem; 
+        }
+        
+        .quick-links a:hover { 
+            color: #f1c40f; 
+        }
+        
+        .user-info { 
+            margin-left: 20px; 
+            display: flex; 
+            align-items: center; 
         }
 
-        .button-primary:hover {
-            background: #135e96;
+        #admin-dashboard { 
+            display: flex; 
+            margin-top: 60px; 
+            min-height: calc(100vh - 60px); 
+        }
+        
+        #admin-sidebar { 
+            width: 200px; 
+            background: #1d2327; 
+            color: #f0f0f1; 
+            position: fixed; 
+            height: calc(100vh - 60px); 
+            overflow-y: auto; 
+        }
+        
+        .sidebar-header { 
+            padding: 20px 15px; 
+            border-bottom: 1px solid #2c3338; 
+        }
+        
+        .sidebar-header h3 { 
+            color: #f1c40f; 
+        }
+        
+        .admin-menu { 
+            list-style: none; 
+            padding: 10px 0; 
+        }
+        
+        .admin-menu li { 
+            margin-bottom: 5px; 
+        }
+        
+        .admin-menu a { 
+            display: flex; 
+            align-items: center; 
+            padding: 12px 15px; 
+            color: #f0f0f1; 
+            text-decoration: none; 
+            transition: all 0.2s; 
+        }
+        
+        .admin-menu a:hover, 
+        .admin-menu a.active { 
+            background: #2c3338; 
+            color: #f1c40f; 
+        }
+        
+        .admin-menu a i { 
+            margin-right: 10px; 
         }
 
-        .button-danger {
-            background: #d63638;
+        #admin-content { 
+            flex: 1; 
+            margin-left: 200px; 
+            padding: 20px; 
         }
-
-        .button-danger:hover {
-            background: #b32d2e;
+        
+        .welcome-panel { 
+            background: white; 
+            border: 1px solid #c3c4c7; 
+            border-radius: 4px; 
+            margin-bottom: 20px; 
+            padding: 20px; 
         }
-
-        .button-success {
-            background: #46b450;
+        
+        .dashboard-widgets { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 20px; 
         }
-
-        .button-success:hover {
-            background: #389a40;
+        
+        .dashboard-widget { 
+            background: white; 
+            border: 1px solid #c3c4c7; 
+            border-radius: 4px; 
+            overflow: hidden; 
         }
-
-        /* Responsive Design */
+        
+        .widget-header { 
+            background: #f6f7f7; 
+            border-bottom: 1px solid #c3c4c7; 
+            padding: 15px; 
+            font-weight: 600; 
+        }
+        
+        .widget-content { 
+            padding: 15px; 
+        }
+        
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+        }
+        
+        .stat-item { 
+            text-align: center; 
+            padding: 15px; 
+            border-radius: 4px; 
+        }
+        
+        .stat-item.primary { 
+            background: #e7f3ff; 
+            border-left: 4px solid #2271b1; 
+        }
+        
+        .stat-item.success { 
+            background: #edf7ed; 
+            border-left: 4px solid #46b450; 
+        }
+        
+        .stat-item.warning { 
+            background: #fff8e5; 
+            border-left: 4px solid #ffb900; 
+        }
+        
+        .stat-item.danger { 
+            background: #fcf0f1; 
+            border-left: 4px solid #d63638; 
+        }
+        
+        .stat-number { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+        }
+        
+        .admin-page { 
+            display: none; 
+            background: white; 
+            border: 1px solid #c3c4c7; 
+            border-radius: 4px; 
+            padding: 20px; 
+        }
+        
+        .admin-page.active { 
+            display: block; 
+        }
+        
+        .page-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            padding-bottom: 15px; 
+            border-bottom: 1px solid #f0f0f1; 
+        }
+        
+        .form-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+        
+        .form-table th { 
+            text-align: left; 
+            padding: 15px 10px 15px 0; 
+            width: 200px; 
+            font-weight: 600; 
+        }
+        
+        .form-table td { 
+            padding: 15px 0; 
+        }
+        
+        .form-table input, 
+        .form-table select, 
+        .form-table textarea { 
+            width: 100%; 
+            padding: 8px 10px; 
+            border: 1px solid #dcdcde; 
+            border-radius: 4px; 
+        }
+        
+        .button-admin { 
+            background: #2271b1; 
+            color: white; 
+            padding: 8px 15px; 
+            border: none; 
+            border-radius: 3px; 
+            cursor: pointer; 
+            text-decoration: none; 
+        }
+        
+        .button-admin:hover { 
+            background: #135e96; 
+        }
+        
+        .button-primary { 
+            background: #2271b1; 
+        }
+        
+        .button-danger { 
+            background: #d63638; 
+        }
+        
         @media (max-width: 768px) {
-            #admin-sidebar {
-                width: 40px;
+            #admin-sidebar { 
+                width: 60px; 
             }
-
-            #admin-sidebar .admin-menu a span {
-                display: none;
+            
+            #admin-content { 
+                margin-left: 60px; 
             }
-
-            #admin-sidebar .admin-menu a i {
-                margin-right: 0;
+            
+            .admin-menu a span { 
+                display: none; 
             }
-
-            #admin-sidebar .sidebar-header h3 {
-                display: none;
-            }
-
-            #admin-content {
-                margin-left: 40px;
-            }
-
-            .welcome-panel-content {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-widgets {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
+            
+            .admin-menu a i { 
+                margin-right: 0; 
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- WordPress Admin Bar -->
-    <div id="wpadminbar">
-        <div class="ab-top-menu">
-            <a href="index.html" class="wp-admin-bar-logo">ALEEM <span>CAR SALES</span></a>
-            <div class="quick-links">
-                <a href="index.html" id="view-site">View Site</a>
-                <a href="#" id="logout-admin">Log Out</a>
+    <!-- Login Screen -->
+    <div class="login-container" id="login-container">
+        <div class="logo">ALEEM <span>CAR SALES</span></div>
+        <div class="slogan">Admin Dashboard</div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="Enter admin username">
             </div>
-            <div class="user-info">
-                <img src="https://ui-avatars.com/api/?name=Admin+User&background=e74c3c&color=fff" alt="Admin User">
-                <span>Admin User</span>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Enter admin password">
             </div>
-        </div>
+            
+            <button type="submit" class="button">Login</button>
+            <div class="error-message" id="error-message">Invalid username or password</div>
+        </form>
     </div>
 
-    <!-- Admin Dashboard -->
-    <div id="admin-dashboard">
-        <!-- Admin Sidebar -->
-        <div id="admin-sidebar">
-            <div class="sidebar-header">
-                <h3>Dashboard Menu</h3>
-                <button class="toggle-sidebar"><i class="fas fa-chevron-left"></i></button>
-            </div>
-            <ul class="admin-menu">
-                <li><a href="#" class="menu-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-                <li><a href="#" class="menu-item" data-page="cars"><i class="fas fa-car"></i> <span>Cars</span></a></li>
-                <li><a href="#" class="menu-item" data-page="services"><i class="fas fa-concierge-bell"></i> <span>Services</span></a></li>
-                <li><a href="#" class="menu-item" data-page="financing"><i class="fas fa-money-bill-wave"></i> <span>Financing</span></a></li>
-                <li><a href="#" class="menu-item" data-page="settings"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
-            </ul>
-        </div>
-
-        <!-- Admin Content -->
-        <div id="admin-content">
-            <!-- Dashboard Page -->
-            <div class="admin-page active" id="dashboard-page">
-                <!-- Welcome Panel -->
-                <div class="welcome-panel">
-                    <div class="welcome-panel-header">
-                        <h2>Welcome to ALEEM CAR SALES Dashboard</h2>
-                    </div>
-                    <div class="welcome-panel-content">
-                        <div class="welcome-panel-column">
-                            <p>Welcome to your ALEEM CAR SALES dashboard! This is your hub for managing your car inventory, services, financing options, and website settings.</p>
-                            <p>From here you can:</p>
-                            <ul>
-                                <li>Add and manage your car inventory</li>
-                                <li>Update services and financing options</li>
-                                <li>Monitor your website performance</li>
-                                <li>Customize your site settings</li>
-                            </ul>
-                            <div class="welcome-panel-links">
-                                <a href="#" class="menu-item" data-page="cars"><i class="fas fa-car"></i> Manage Cars</a>
-                                <a href="#" class="menu-item" data-page="services"><i class="fas fa-concierge-bell"></i> Manage Services</a>
-                                <a href="#" class="menu-item" data-page="financing"><i class="fas fa-money-bill-wave"></i> Manage Financing</a>
-                            </div>
-                        </div>
-                        <div class="welcome-panel-column">
-                            <h3>Quick Stats</h3>
-                            <div class="stats-grid">
-                                <div class="stat-item primary">
-                                    <div class="stat-number" id="total-cars">0</div>
-                                    <div class="stat-label">Total Cars</div>
-                                </div>
-                                <div class="stat-item success">
-                                    <div class="stat-number" id="available-cars">0</div>
-                                    <div class="stat-label">Available</div>
-                                </div>
-                                <div class="stat-item warning">
-                                    <div class="stat-number" id="sold-cars">0</div>
-                                    <div class="stat-label">Sold</div>
-                                </div>
-                                <div class="stat-item danger">
-                                    <div class="stat-number" id="pending-cars">0</div>
-                                    <div class="stat-label">Pending</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dashboard Widgets -->
-                <div class="dashboard-widgets">
-                    <!-- Recent Cars Widget -->
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <span>Recent Cars</span>
-                            <div class="widget-controls">
-                                <a href="#" class="menu-item" data-page="cars"><i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div class="widget-content">
-                            <ul class="recent-cars-list" id="recent-cars-list">
-                                <!-- Recent cars will be populated here -->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Quick Actions Widget -->
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <span>Quick Actions</span>
-                        </div>
-                        <div class="widget-content">
-                            <div class="quick-actions">
-                                <a href="#" class="quick-action menu-item" data-page="cars">
-                                    <i class="fas fa-plus-circle"></i>
-                                    <span>Add New Car</span>
-                                </a>
-                                <a href="#" class="quick-action menu-item" data-page="services">
-                                    <i class="fas fa-edit"></i>
-                                    <span>Edit Services</span>
-                                </a>
-                                <a href="#" class="quick-action menu-item" data-page="financing">
-                                    <i class="fas fa-dollar-sign"></i>
-                                    <span>Update Financing</span>
-                                </a>
-                                <a href="#" class="quick-action menu-item" data-page="settings">
-                                    <i class="fas fa-cogs"></i>
-                                    <span>Site Settings</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Activity Widget -->
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <span>Recent Activity</span>
-                        </div>
-                        <div class="widget-content">
-                            <ul class="recent-cars-list" id="recent-activity">
-                                <!-- Recent activity will be populated here -->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cars Management Page -->
-            <div class="admin-page" id="cars-page">
-                <div class="page-header">
-                    <h1>Manage Cars</h1>
-                    <button class="button button-primary" id="add-car-btn">Add New Car</button>
-                </div>
-                
-                <!-- Car Form (initially hidden) -->
-                <div id="car-form-container" style="display: none;">
-                    <form id="car-form">
-                        <table class="form-table">
-                            <tbody>
-                                <tr>
-                                    <th><label for="car-make">Make</label></th>
-                                    <td><input type="text" id="car-make" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-model">Model</label></th>
-                                    <td><input type="text" id="car-model" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-year">Year</label></th>
-                                    <td><input type="number" id="car-year" min="2000" max="2023" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-price">Price (R)</label></th>
-                                    <td><input type="number" id="car-price" min="100000" max="500000" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-mileage">Mileage</label></th>
-                                    <td><input type="text" id="car-mileage" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-transmission">Transmission</label></th>
-                                    <td>
-                                        <select id="car-transmission" required>
-                                            <option value="Automatic">Automatic</option>
-                                            <option value="Manual">Manual</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-description">Description</label></th>
-                                    <td><textarea id="car-description"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-status">Status</label></th>
-                                    <td>
-                                        <select id="car-status" required>
-                                            <option value="available">Available</option>
-                                            <option value="sold">Sold</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><label for="car-image">Car Image</label></th>
-                                    <td>
-                                        <input type="file" id="car-image-file" accept="image/*">
-                                        <p class="description">Upload a car image (JPG, PNG, GIF).</p>
-                                        <div id="image-preview-container"></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="submit">
-                            <button type="submit" class="button button-primary" id="car-submit-btn">Add Vehicle</button>
-                            <button type="button" class="button" id="cancel-car-form">Cancel</button>
-                        </div>
-                        <input type="hidden" id="editing-car-id" value="">
-                    </form>
-                </div>
-                
-                <!-- Cars List -->
-                <div id="cars-list-container">
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <span>All Cars</span>
-                            <div class="widget-controls">
-                                <a href="#" id="refresh-cars"><i class="fas fa-sync-alt"></i></a>
-                            </div>
-                        </div>
-                        <div class="widget-content">
-                            <div id="admin-cars-list">
-                                <!-- Cars will be populated here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Services Management Page -->
-            <div class="admin-page" id="services-page">
-                <div class="page-header">
-                    <h1>Manage Services</h1>
-                    <button class="button button-primary" id="add-service-btn">Add New Service</button>
-                </div>
-                
-                <!-- Services Form (initially hidden) -->
-                <div id="service-form-container" style="display: none;">
-                    <form id="service-form">
-                        <table class="form-table">
-                            <tbody>
-                                <tr>
-                                    <th><label for="service-title">Service Title</label></th>
-                                    <td><input type="text" id="service-title" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="service-description">Description</label></th>
-                                    <td><textarea id="service-description" required></textarea></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="service-icon">Icon Class</label></th>
-                                    <td>
-                                        <input type="text" id="service-icon" placeholder="fas fa-cog">
-                                        <p class="description">Enter a Font Awesome icon class (e.g., fas fa-cog)</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="submit">
-                            <button type="submit" class="button button-primary" id="service-submit-btn">Add Service</button>
-                            <button type="button" class="button" id="cancel-service-form">Cancel</button>
-                        </div>
-                        <input type="hidden" id="editing-service-id" value="">
-                    </form>
-                </div>
-                
-                <!-- Services List -->
-                <div id="services-list-container">
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <span>All Services</span>
-                        </div>
-                        <div class="widget-content">
-                            <div id="admin-services-list">
-                                <!-- Services will be populated here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Financing Management Page -->
-            <div class="admin-page" id="financing-page">
-                <div class="page-header">
-                    <h1>Manage Financing Options</h1>
-                    <button class="button button-primary" id="add-financing-btn">Add New Option</button>
-                </div>
-                
-                <!-- Financing Form (initially hidden) -->
-                <div id="financing-form-container" style="display: none;">
-                    <form id="financing-form">
-                        <table class="form-table">
-                            <tbody>
-                                <tr>
-                                    <th><label for="financing-title">Option Title</label></th>
-                                    <td><input type="text" id="financing-title" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="financing-description">Description</label></th>
-                                    <td><textarea id="financing-description" required></textarea></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="submit">
-                            <button type="submit" class="button button-primary" id="financing-submit-btn">Add Option</button>
-                            <button type="button" class="button" id="cancel-financing-form">Cancel</button>
-                        </div>
-                        <input type="hidden" id="editing-financing-id" value="">
-                    </form>
-                </div>
-                
-                <!-- Financing List -->
-                <div id="financing-list-container">
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <span>All Financing Options</span>
-                        </div>
-                        <div class="widget-content">
-                            <div id="admin-financing-list">
-                                <!-- Financing options will be populated here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Settings Page -->
-            <div class="admin-page" id="settings-page">
-                <div class="page-header">
-                    <h1>Settings</h1>
-                </div>
-                
-                <form id="settings-form">
-                    <table class="form-table">
-                        <tbody>
-                            <tr>
-                                <th><label for="site-title">Site Title</label></th>
-                                <td><input type="text" id="site-title" value="ALEEM CAR SALES"></td>
-                            </tr>
-                            <tr>
-                                <th><label for="site-tagline">Tagline</label></th>
-                                <td><input type="text" id="site-tagline" value="The Home of Fine Rides"></td>
-                            </tr>
-                            <tr>
-                                <th><label for="admin-email">Admin Email</label></th>
-                                <td><input type="email" id="admin-email" value="aleemcarsales1@gmail.com"></td>
-                            </tr>
-                            <tr>
-                                <th><label for="business-phone">Business Phone</label></th>
-                                <td><input type="text" id="business-phone" value="0786196676"></td>
-                            </tr>
-                            <tr>
-                                <th><label for="business-hours">Business Hours</label></th>
-                                <td><input type="text" id="business-hours" value="Mon-Fri: 9am-6pm, Sat: 9am-2pm"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="submit">
-                        <button type="submit" class="button button-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <!-- Admin Dashboard (Hidden until login) -->
+    <div id="admin-dashboard" class="admin-dashboard"></div>
 
     <script>
-        // Load data from localStorage
-        let cars = JSON.parse(localStorage.getItem('aleemCars')) || [];
-        let services = JSON.parse(localStorage.getItem('aleemServices')) || [
-            { id: 1, title: "Add", description: "Add services", icon: "fas fa-cog" },
-            { id: 2, title: "Add", description: "Add services", icon: "fas fa-cog" },
-            { id: 3, title: "Add", description: "Add services", icon: "fas fa-cog" },
-            { id: 4, title: "Add", description: "Add services", icon: "fas fa-cog" }
-        ];
-        
-        let financingOptions = JSON.parse(localStorage.getItem('aleemFinancing')) || [
-            { id: 1, title: "Add", description: "Add financing options" },
-            { id: 2, title: "Add", description: "Add financing options" },
-            { id: 3, title: "Add", description: "Add financing options" },
-            { id: 4, title: "Add", description: "Add financing options" }
-        ];
-
-        // Save data to localStorage
-        function saveData() {
-            localStorage.setItem('aleemCars', JSON.stringify(cars));
-            localStorage.setItem('aleemServices', JSON.stringify(services));
-            localStorage.setItem('aleemFinancing', JSON.stringify(financingOptions));
-        }
+        // Admin credentials - CHANGE THESE TO YOUR PREFERRED CREDENTIALS!
+        const ADMIN_CREDENTIALS = {
+            username: "aleemadmin",
+            password: "carsales123"  // ⚠️ CHANGE THIS PASSWORD!
+        };
 
         // DOM Elements
-        const sidebar = document.getElementById('admin-sidebar');
-        const adminContent = document.getElementById('admin-content');
-        const toggleSidebarBtn = document.querySelector('.toggle-sidebar');
-        const menuItems = document.querySelectorAll('.menu-item');
-        const adminPages = document.querySelectorAll('.admin-page');
-        const viewSiteBtn = document.getElementById('view-site');
-        const logoutBtn = document.getElementById('logout-admin');
+        const loginContainer = document.getElementById('login-container');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
 
-        // Toggle sidebar
-        toggleSidebarBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('collapsed');
-            adminContent.classList.toggle('expanded');
-        });
-
-        // Navigation
-        menuItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetPage = this.getAttribute('data-page');
-                
-                // Update active menu item
-                menuItems.forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Show target page
-                adminPages.forEach(page => {
-                    page.classList.remove('active');
-                    if (page.id === `${targetPage}-page`) {
-                        page.classList.add('active');
-                    }
-                });
-                
-                // Special handling for form containers
-                if (targetPage !== 'cars') {
-                    document.getElementById('car-form-container').style.display = 'none';
-                    document.getElementById('cars-list-container').style.display = 'block';
-                }
-                
-                if (targetPage !== 'services') {
-                    document.getElementById('service-form-container').style.display = 'none';
-                    document.getElementById('services-list-container').style.display = 'block';
-                }
-                
-                if (targetPage !== 'financing') {
-                    document.getElementById('financing-form-container').style.display = 'none';
-                    document.getElementById('financing-list-container').style.display = 'block';
-                }
-                
-                // Update stats when dashboard is shown
-                if (targetPage === 'dashboard') {
-                    updateDashboardStats();
-                }
-            });
-        });
-
-        // View Site button
-        viewSiteBtn.addEventListener('click', function(e) {
+        // Login form handler
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            window.location.href = 'index.html';
-        });
-
-        // Logout button
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (confirm('Are you sure you want to log out?')) {
-                window.location.href = 'index.html';
-            }
-        });
-
-        // Format price to R currency
-        function formatPrice(price) {
-            return 'R' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        // Update dashboard stats
-        function updateDashboardStats() {
-            const totalCars = cars.length;
-            const availableCars = cars.filter(car => car.status === 'available').length;
-            const soldCars = cars.filter(car => car.status === 'sold').length;
             
-            document.getElementById('total-cars').textContent = totalCars;
-            document.getElementById('available-cars').textContent = availableCars;
-            document.getElementById('sold-cars').textContent = soldCars;
-            document.getElementById('pending-cars').textContent = 0;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             
-            // Update recent cars list
-            const recentCarsList = document.getElementById('recent-cars-list');
-            recentCarsList.innerHTML = '';
-            
-            const recentCars = cars.slice(-5).reverse();
-            if (recentCars.length === 0) {
-                recentCarsList.innerHTML = '<li>No cars added yet.</li>';
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                // Successful login
+                loginContainer.style.display = 'none';
+                adminDashboard.style.display = 'block';
+                loadAdminDashboard();
             } else {
-                recentCars.forEach(car => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <div class="car-thumbnail">
-                            ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}" style="width:100%;height:100%;object-fit:cover;">` : 'No Image'}
-                        </div>
-                        <div class="car-info">
-                            <div class="car-title">${car.make} ${car.model}</div>
-                            <div class="car-meta">${car.year} • ${formatPrice(car.price)}</div>
-                        </div>
-                        <span class="car-status ${car.status === 'available' ? 'status-available' : 'status-sold'}">${car.status === 'available' ? 'Available' : 'Sold'}</span>
-                    `;
-                    recentCarsList.appendChild(li);
-                });
+                // Failed login
+                errorMessage.style.display = 'block';
+                document.getElementById('password').value = '';
             }
-            
-            // Update recent activity
-            const recentActivity = document.getElementById('recent-activity');
-            recentActivity.innerHTML = '';
-            
-            // Add some sample activities
-            const activities = [
-                { action: 'Car added', details: 'BMW X5', time: '2 hours ago' },
-                { action: 'Car status updated', details: 'Toyota Corolla marked as sold', time: '1 day ago' },
-                { action: 'Service updated', details: 'Added new financing option', time: '2 days ago' }
-            ];
-            
-            activities.forEach(activity => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div class="car-info">
-                        <div class="car-title">${activity.action}</div>
-                        <div class="car-meta">${activity.details} • ${activity.time}</div>
+        });
+
+        function loadAdminDashboard() {
+            // Load the full admin dashboard content
+            adminDashboard.innerHTML = `
+                <!-- WordPress Admin Bar -->
+                <div id="wpadminbar">
+                    <div style="display: flex; align-items: center; width: 100%;">
+                        <a href="index.html" class="wp-admin-bar-logo">ALEEM <span>CAR SALES</span></a>
+                        <div class="quick-links">
+                            <a href="index.html">View Site</a>
+                            <a href="#" id="logout-admin">Log Out</a>
+                        </div>
+                        <div class="user-info">
+                            <span>Admin User</span>
+                        </div>
                     </div>
-                `;
-                recentActivity.appendChild(li);
-            });
-        }
+                </div>
 
-        // Initialize dashboard
-        updateDashboardStats();
+                <!-- Admin Dashboard -->
+                <div id="admin-dashboard-inner">
+                    <!-- Admin Sidebar -->
+                    <div id="admin-sidebar">
+                        <div class="sidebar-header">
+                            <h3>Dashboard Menu</h3>
+                        </div>
+                        <ul class="admin-menu">
+                            <li><a href="#" class="menu-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                            <li><a href="#" class="menu-item" data-page="cars"><i class="fas fa-car"></i> <span>Cars</span></a></li>
+                            <li><a href="#" class="menu-item" data-page="services"><i class="fas fa-concierge-bell"></i> <span>Services</span></a></li>
+                            <li><a href="#" class="menu-item" data-page="financing"><i class="fas fa-money-bill-wave"></i> <span>Financing</span></a></li>
+                        </ul>
+                    </div>
 
-        // Car Management
-        const addCarBtn = document.getElementById('add-car-btn');
-        const carFormContainer = document.getElementById('car-form-container');
-        const carsListContainer = document.getElementById('cars-list-container');
-        const carForm = document.getElementById('car-form');
-        const cancelCarForm = document.getElementById('cancel-car-form');
-        const carSubmitBtn = document.getElementById('car-submit-btn');
-        const adminCarsList = document.getElementById('admin-cars-list');
-        const refreshCarsBtn = document.getElementById('refresh-cars');
-
-        // Show car form
-        addCarBtn.addEventListener('click', function() {
-            carFormContainer.style.display = 'block';
-            carsListContainer.style.display = 'none';
-            resetCarForm();
-        });
-
-        // Cancel car form
-        cancelCarForm.addEventListener('click', function() {
-            carFormContainer.style.display = 'none';
-            carsListContainer.style.display = 'block';
-            resetCarForm();
-        });
-
-        // Reset car form
-        function resetCarForm() {
-            carForm.reset();
-            document.getElementById('editing-car-id').value = '';
-            carSubmitBtn.textContent = 'Add Vehicle';
-            document.getElementById('image-preview-container').innerHTML = '';
-        }
-
-        // Render admin cars list
-        function renderAdminCarsList() {
-            adminCarsList.innerHTML = '';
-            
-            if (cars.length === 0) {
-                adminCarsList.innerHTML = '<p>No cars added yet.</p>';
-                return;
-            }
-            
-            const table = document.createElement('table');
-            table.style.width = '100%';
-            table.style.borderCollapse = 'collapse';
-            table.innerHTML = `
-                <thead>
-                    <tr style="background: #f6f7f7; border-bottom: 1px solid #c3c4c7;">
-                        <th style="padding: 10px; text-align: left;">Car</th>
-                        <th style="padding: 10px; text-align: left;">Price</th>
-                        <th style="padding: 10px; text-align: left;">Status</th>
-                        <th style="padding: 10px; text-align: left;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${cars.map(car => `
-                        <tr style="border-bottom: 1px solid #f0f0f1;">
-                            <td style="padding: 10px;">
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 60px; height: 40px; background: #f0f0f1; margin-right: 10px; display: flex; align-items: center; justify-content: center;">
-                                        ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}" style="width:100%;height:100%;object-fit:cover;">` : 'No Image'}
+                    <!-- Admin Content -->
+                    <div id="admin-content">
+                        <!-- Dashboard Page -->
+                        <div class="admin-page active" id="dashboard-page">
+                            <div class="welcome-panel">
+                                <h2>Welcome to ALEEM CAR SALES Dashboard</h2>
+                                <p>Manage your car inventory, services, and financing options from this dashboard.</p>
+                                
+                                <div class="stats-grid" style="margin-top: 20px;">
+                                    <div class="stat-item primary">
+                                        <div class="stat-number" id="total-cars">0</div>
+                                        <div class="stat-label">Total Cars</div>
                                     </div>
-                                    <div>
-                                        <strong>${car.make} ${car.model}</strong><br>
-                                        <small>${car.year} • ${car.mileage} • ${car.transmission}</small>
+                                    <div class="stat-item success">
+                                        <div class="stat-number" id="available-cars">0</div>
+                                        <div class="stat-label">Available</div>
+                                    </div>
+                                    <div class="stat-item warning">
+                                        <div class="stat-number" id="sold-cars">0</div>
+                                        <div class="stat-label">Sold</div>
                                     </div>
                                 </div>
-                            </td>
-                            <td style="padding: 10px;">${formatPrice(car.price)}</td>
-                            <td style="padding: 10px;">
-                                <span class="car-status ${car.status === 'available' ? 'status-available' : 'status-sold'}">${car.status === 'available' ? 'Available' : 'Sold'}</span>
-                            </td>
-                            <td style="padding: 10px;">
-                                <button class="button button-primary edit-car" data-id="${car.id}" style="padding: 5px 10px; font-size: 0.8rem;">Edit</button>
-                                <button class="button button-danger delete-car" data-id="${car.id}" style="padding: 5px 10px; font-size: 0.8rem;">Delete</button>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
+                            </div>
+
+                            <div class="dashboard-widgets">
+                                <div class="dashboard-widget">
+                                    <div class="widget-header">Quick Actions</div>
+                                    <div class="widget-content">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                            <a href="#" class="button-admin button-primary menu-item" data-page="cars" style="text-align: center; padding: 15px;">
+                                                <i class="fas fa-plus-circle"></i><br>Add New Car
+                                            </a>
+                                            <a href="#" class="button-admin button-primary menu-item" data-page="services" style="text-align: center; padding: 15px;">
+                                                <i class="fas fa-edit"></i><br>Edit Services
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dashboard-widget">
+                                    <div class="widget-header">Recent Cars</div>
+                                    <div class="widget-content">
+                                        <div id="recent-cars-list">
+                                            <!-- Recent cars will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cars Management Page -->
+                        <div class="admin-page" id="cars-page">
+                            <div class="page-header">
+                                <h1>Manage Cars</h1>
+                                <button class="button-admin button-primary" id="add-car-btn">Add New Car</button>
+                            </div>
+                            
+                            <!-- Car Form -->
+                            <div id="car-form-container" style="display: none; background: white; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+                                <form id="car-form">
+                                    <table class="form-table">
+                                        <tr>
+                                            <th><label for="car-make">Make</label></th>
+                                            <td><input type="text" id="car-make" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-model">Model</label></th>
+                                            <td><input type="text" id="car-model" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-year">Year</label></th>
+                                            <td><input type="number" id="car-year" min="2000" max="2023" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-price">Price (R)</label></th>
+                                            <td><input type="number" id="car-price" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-mileage">Mileage</label></th>
+                                            <td><input type="text" id="car-mileage" required></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-transmission">Transmission</label></th>
+                                            <td>
+                                                <select id="car-transmission" required>
+                                                    <option value="Automatic">Automatic</option>
+                                                    <option value="Manual">Manual</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-description">Description</label></th>
+                                            <td><textarea id="car-description"></textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="car-status">Status</label></th>
+                                            <td>
+                                                <select id="car-status" required>
+                                                    <option value="available">Available</option>
+                                                    <option value="sold">Sold</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 20px;">
+                                        <button type="submit" class="button-admin button-primary" id="car-submit-btn">Add Vehicle</button>
+                                        <button type="button" class="button-admin" id="cancel-car-form">Cancel</button>
+                                    </div>
+                                    <input type="hidden" id="editing-car-id" value="">
+                                </form>
+                            </div>
+                            
+                            <!-- Cars List -->
+                            <div id="cars-list-container">
+                                <div class="dashboard-widget">
+                                    <div class="widget-header">All Cars</div>
+                                    <div class="widget-content">
+                                        <div id="admin-cars-list">
+                                            <!-- Cars will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services Management Page -->
+                        <div class="admin-page" id="services-page">
+                            <div class="page-header">
+                                <h1>Manage Services</h1>
+                            </div>
+                            
+                            <div class="dashboard-widget">
+                                <div class="widget-header">Current Services</div>
+                                <div class="widget-content">
+                                    <div id="admin-services-list">
+                                        <!-- Services will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financing Management Page -->
+                        <div class="admin-page" id="financing-page">
+                            <div class="page-header">
+                                <h1>Manage Financing Options</h1>
+                            </div>
+                            
+                            <div class="dashboard-widget">
+                                <div class="widget-header">Current Financing Options</div>
+                                <div class="widget-content">
+                                    <div id="admin-financing-list">
+                                        <!-- Financing options will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `;
             
-            adminCarsList.appendChild(table);
-            
-            // Add event listeners for edit and delete buttons
-            document.querySelectorAll('.edit-car').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const carId = parseInt(this.getAttribute('data-id'));
-                    editCar(carId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-car').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const carId = parseInt(this.getAttribute('data-id'));
-                    deleteCar(carId);
-                });
-            });
+            // Initialize the admin dashboard functionality
+            initializeAdminDashboard();
         }
 
-        // Edit car
-        function editCar(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (car) {
-                document.getElementById('car-make').value = car.make;
-                document.getElementById('car-model').value = car.model;
-                document.getElementById('car-year').value = car.year;
-                document.getElementById('car-price').value = car.price;
-                document.getElementById('car-mileage').value = car.mileage;
-                document.getElementById('car-transmission').value = car.transmission;
-                document.getElementById('car-description').value = car.description;
-                document.getElementById('car-status').value = car.status;
+        function initializeAdminDashboard() {
+            // Load data from localStorage
+            let cars = JSON.parse(localStorage.getItem('aleemCars')) || [];
+            let services = JSON.parse(localStorage.getItem('aleemServices')) || [];
+            let financingOptions = JSON.parse(localStorage.getItem('aleemFinancing')) || [];
+
+            // Save data to localStorage
+            function saveData() {
+                localStorage.setItem('aleemCars', JSON.stringify(cars));
+                localStorage.setItem('aleemServices', JSON.stringify(services));
+                localStorage.setItem('aleemFinancing', JSON.stringify(financingOptions));
+            }
+
+            // DOM Elements
+            const menuItems = document.querySelectorAll('.menu-item');
+            const adminPages = document.querySelectorAll('.admin-page');
+
+            // Navigation
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Update active menu item
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target page
+                    adminPages.forEach(page => {
+                        page.classList.remove('active');
+                        if (page.id === `${targetPage}-page`) {
+                            page.classList.add('active');
+                        }
+                    });
+                    
+                    // Update dashboard when shown
+                    if (targetPage === 'dashboard') {
+                        updateDashboardStats();
+                    }
+                    
+                    // Show/hide form containers
+                    if (targetPage !== 'cars') {
+                        document.getElementById('car-form-container').style.display = 'none';
+                        document.getElementById('cars-list-container').style.display = 'block';
+                    }
+                });
+            });
+
+            // Update dashboard stats
+            function updateDashboardStats() {
+                const totalCars = cars.length;
+                const availableCars = cars.filter(car => car.status === 'available').length;
+                const soldCars = cars.filter(car => car.status === 'sold').length;
                 
-                if (car.image) {
-                    document.getElementById('image-preview-container').innerHTML = `
-                        <img src="${car.image}" alt="Preview" style="max-width: 200px; margin-top: 10px;">
-                    `;
+                document.getElementById('total-cars').textContent = totalCars;
+                document.getElementById('available-cars').textContent = availableCars;
+                document.getElementById('sold-cars').textContent = soldCars;
+                
+                // Update recent cars list
+                const recentCarsList = document.getElementById('recent-cars-list');
+                recentCarsList.innerHTML = '';
+                
+                const recentCars = cars.slice(-3).reverse();
+                if (recentCars.length === 0) {
+                    recentCarsList.innerHTML = '<p>No cars added yet.</p>';
+                } else {
+                    recentCars.forEach(car => {
+                        const div = document.createElement('div');
+                        div.style.padding = '10px 0';
+                        div.style.borderBottom = '1px solid #f0f0f1';
+                        div.innerHTML = `<strong>${car.make} ${car.model}</strong> - R${car.price.toLocaleString()}`;
+                        recentCarsList.appendChild(div);
+                    });
                 }
-                
-                document.getElementById('editing-car-id').value = carId;
-                carSubmitBtn.textContent = 'Update Vehicle';
-                
+            }
+
+            // Car Management
+            const addCarBtn = document.getElementById('add-car-btn');
+            const carFormContainer = document.getElementById('car-form-container');
+            const carsListContainer = document.getElementById('cars-list-container');
+            const carForm = document.getElementById('car-form');
+            const cancelCarForm = document.getElementById('cancel-car-form');
+
+            // Show car form
+            addCarBtn.addEventListener('click', function() {
                 carFormContainer.style.display = 'block';
                 carsListContainer.style.display = 'none';
-            }
-        }
+                resetCarForm();
+            });
 
-        // Delete car
-        function deleteCar(carId) {
-            if (confirm('Are you sure you want to delete this car?')) {
-                cars = cars.filter(c => c.id !== carId);
+            // Cancel car form
+            cancelCarForm.addEventListener('click', function() {
+                carFormContainer.style.display = 'none';
+                carsListContainer.style.display = 'block';
+                resetCarForm();
+            });
+
+            // Reset car form
+            function resetCarForm() {
+                carForm.reset();
+                document.getElementById('editing-car-id').value = '';
+                document.getElementById('car-submit-btn').textContent = 'Add Vehicle';
+            }
+
+            // Render admin cars list
+            function renderAdminCarsList() {
+                const adminCarsList = document.getElementById('admin-cars-list');
+                adminCarsList.innerHTML = '';
+                
+                if (cars.length === 0) {
+                    adminCarsList.innerHTML = '<p>No cars added yet. Click "Add New Car" to get started.</p>';
+                    return;
+                }
+                
+                cars.forEach(car => {
+                    const carDiv = document.createElement('div');
+                    carDiv.style.padding = '15px';
+                    carDiv.style.border = '1px solid #f0f0f1';
+                    carDiv.style.borderRadius = '4px';
+                    carDiv.style.marginBottom = '10px';
+                    carDiv.style.background = car.status === 'sold' ? '#f9f9f9' : 'white';
+                    
+                    carDiv.innerHTML = `
+                        <div style="display: flex; justify-content: between; align-items: center;">
+                            <div style="flex: 1;">
+                                <h3 style="margin: 0 0 5px 0;">${car.make} ${car.model} (${car.year})</h3>
+                                <p style="margin: 0 0 5px 0; color: #666;">${car.mileage} • ${car.transmission} • R${car.price.toLocaleString()}</p>
+                                <p style="margin: 0; font-size: 0.9em;">${car.description || 'No description'}</p>
+                            </div>
+                            <div>
+                                <span style="background: ${car.status === 'available' ? '#46b450' : '#d63638'}; color: white; padding: 5px 10px; border-radius: 3px; font-size: 0.8em;">
+                                    ${car.status === 'available' ? 'Available' : 'Sold'}
+                                </span>
+                                <button class="button-admin edit-car" data-id="${car.id}" style="margin-left: 10px;">Edit</button>
+                                <button class="button-admin button-danger delete-car" data-id="${car.id}" style="margin-left: 5px;">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    adminCarsList.appendChild(carDiv);
+                });
+
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-car').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const carId = parseInt(this.getAttribute('data-id'));
+                        editCar(carId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-car').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const carId = parseInt(this.getAttribute('data-id'));
+                        deleteCar(carId);
+                    });
+                });
+            }
+
+            // Edit car
+            function editCar(carId) {
+                const car = cars.find(c => c.id === carId);
+                if (car) {
+                    document.getElementById('car-make').value = car.make;
+                    document.getElementById('car-model').value = car.model;
+                    document.getElementById('car-year').value = car.year;
+                    document.getElementById('car-price').value = car.price;
+                    document.getElementById('car-mileage').value = car.mileage;
+                    document.getElementById('car-transmission').value = car.transmission;
+                    document.getElementById('car-description').value = car.description || '';
+                    document.getElementById('car-status').value = car.status;
+                    
+                    document.getElementById('editing-car-id').value = carId;
+                    document.getElementById('car-submit-btn').textContent = 'Update Vehicle';
+                    
+                    carFormContainer.style.display = 'block';
+                    carsListContainer.style.display = 'none';
+                }
+            }
+
+            // Delete car
+            function deleteCar(carId) {
+                if (confirm('Are you sure you want to delete this car?')) {
+                    cars = cars.filter(c => c.id !== carId);
+                    saveData();
+                    renderAdminCarsList();
+                    updateDashboardStats();
+                    alert('Car deleted successfully!');
+                }
+            }
+
+            // Add or update car
+            carForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const carData = {
+                    id: document.getElementById('editing-car-id').value || Date.now(),
+                    make: document.getElementById('car-make').value,
+                    model: document.getElementById('car-model').value,
+                    year: parseInt(document.getElementById('car-year').value),
+                    price: parseInt(document.getElementById('car-price').value),
+                    mileage: document.getElementById('car-mileage').value,
+                    transmission: document.getElementById('car-transmission').value,
+                    description: document.getElementById('car-description').value,
+                    status: document.getElementById('car-status').value
+                };
+                
+                if (document.getElementById('editing-car-id').value) {
+                    // Update existing car
+                    const index = cars.findIndex(c => c.id === parseInt(document.getElementById('editing-car-id').value));
+                    if (index !== -1) {
+                        cars[index] = carData;
+                    }
+                } else {
+                    // Add new car
+                    cars.push(carData);
+                }
+                
                 saveData();
                 renderAdminCarsList();
                 updateDashboardStats();
-                alert('Car deleted successfully!');
-            }
-        }
+                resetCarForm();
+                carFormContainer.style.display = 'none';
+                carsListContainer.style.display = 'block';
+                alert(`Car ${document.getElementById('editing-car-id').value ? 'updated' : 'added'} successfully!`);
+            });
 
-        // Add or update car
-        carForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const carData = {
-                id: document.getElementById('editing-car-id').value || Date.now(),
-                make: document.getElementById('car-make').value,
-                model: document.getElementById('car-model').value,
-                year: parseInt(document.getElementById('car-year').value),
-                price: parseInt(document.getElementById('car-price').value),
-                mileage: document.getElementById('car-mileage').value,
-                transmission: document.getElementById('car-transmission').value,
-                image: document.getElementById('image-preview-container').querySelector('img')?.src || '',
-                description: document.getElementById('car-description').value,
-                status: document.getElementById('car-status').value
-            };
-            
-            if (document.getElementById('editing-car-id').value) {
-                // Update existing car
-                const index = cars.findIndex(c => c.id === parseInt(document.getElementById('editing-car-id').value));
-                if (index !== -1) {
-                    cars[index] = carData;
-                }
-            } else {
-                // Add new car
-                cars.push(carData);
+            // Render services and financing
+            function renderServicesAndFinancing() {
+                // Services
+                const servicesList = document.getElementById('admin-services-list');
+                servicesList.innerHTML = '';
+                
+                services.forEach(service => {
+                    const div = document.createElement('div');
+                    div.style.padding = '10px 0';
+                    div.style.borderBottom = '1px solid #f0f0f1';
+                    div.innerHTML = `<strong>${service.title}</strong>: ${service.description}`;
+                    servicesList.appendChild(div);
+                });
+                
+                // Financing
+                const financingList = document.getElementById('admin-financing-list');
+                financingList.innerHTML = '';
+                
+                financingOptions.forEach(option => {
+                    const div = document.createElement('div');
+                    div.style.padding = '10px 0';
+                    div.style.borderBottom = '1px solid #f0f0f1';
+                    div.innerHTML = `<strong>${option.title}</strong>: ${option.description}`;
+                    financingList.appendChild(div);
+                });
             }
-            
-            saveData();
-            renderAdminCarsList();
+
+            // Add logout functionality
+            document.getElementById('logout-admin').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to log out?')) {
+                    window.location.href = 'admin.html'; // Reloads to login screen
+                }
+            });
+
+            // Initialize
             updateDashboardStats();
-            resetCarForm();
-            carFormContainer.style.display = 'none';
-            carsListContainer.style.display = 'block';
-            alert(`Car ${document.getElementById('editing-car-id').value ? 'updated' : 'added'} successfully!`);
-        });
-
-        // Image preview
-        document.getElementById('car-image-file').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('image-preview-container').innerHTML = `
-                        <img src="${e.target.result}" alt="Preview" style="max-width: 200px; margin-top: 10px;">
-                    `;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Refresh cars list
-        refreshCarsBtn.addEventListener('click', function(e) {
-            e.preventDefault();
             renderAdminCarsList();
-        });
-
-        // Initialize cars list
-        renderAdminCarsList();
-
-        // Services Management
-        const addServiceBtn = document.getElementById('add-service-btn');
-        const serviceFormContainer = document.getElementById('service-form-container');
-        const servicesListContainer = document.getElementById('services-list-container');
-        const serviceForm = document.getElementById('service-form');
-        const cancelServiceForm = document.getElementById('cancel-service-form');
-        const serviceSubmitBtn = document.getElementById('service-submit-btn');
-        const adminServicesList = document.getElementById('admin-services-list');
-
-        // Show service form
-        addServiceBtn.addEventListener('click', function() {
-            serviceFormContainer.style.display = 'block';
-            servicesListContainer.style.display = 'none';
-            resetServiceForm();
-        });
-
-        // Cancel service form
-        cancelServiceForm.addEventListener('click', function() {
-            serviceFormContainer.style.display = 'none';
-            servicesListContainer.style.display = 'block';
-            resetServiceForm();
-        });
-
-        // Reset service form
-        function resetServiceForm() {
-            serviceForm.reset();
-            document.getElementById('editing-service-id').value = '';
-            serviceSubmitBtn.textContent = 'Add Service';
+            renderServicesAndFinancing();
         }
 
-        // Render admin services list
-        function renderAdminServicesList() {
-            adminServicesList.innerHTML = '';
-            
-            if (services.length === 0) {
-                adminServicesList.innerHTML = '<p>No services added yet.</p>';
-                return;
-            }
-            
-            const table = document.createElement('table');
-            table.style.width = '100%';
-            table.style.borderCollapse = 'collapse';
-            table.innerHTML = `
-                <thead>
-                    <tr style="background: #f6f7f7; border-bottom: 1px solid #c3c4c7;">
-                        <th style="padding: 10px; text-align: left;">Service</th>
-                        <th style="padding: 10px; text-align: left;">Description</th>
-                        <th style="padding: 10px; text-align: left;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${services.map(service => `
-                        <tr style="border-bottom: 1px solid #f0f0f1;">
-                            <td style="padding: 10px;">
-                                <div style="display: flex; align-items: center;">
-                                    <i class="${service.icon}" style="margin-right: 10px;"></i>
-                                    <strong>${service.title}</strong>
-                                </div>
-                            </td>
-                            <td style="padding: 10px;">${service.description}</td>
-                            <td style="padding: 10px;">
-                                <button class="button button-primary edit-service" data-id="${service.id}" style="padding: 5px 10px; font-size: 0.8rem;">Edit</button>
-                                <button class="button button-danger delete-service" data-id="${service.id}" style="padding: 5px 10px; font-size: 0.8rem;">Delete</button>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            `;
-            
-            adminServicesList.appendChild(table);
-            
-            // Add event listeners for edit and delete buttons
-            document.querySelectorAll('.edit-service').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const serviceId = parseInt(this.getAttribute('data-id'));
-                    editService(serviceId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-service').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const serviceId = parseInt(this.getAttribute('data-id'));
-                    deleteService(serviceId);
-                });
-            });
-        }
-
-        // Edit service
-        function editService(serviceId) {
-            const service = services.find(s => s.id === serviceId);
-            if (service) {
-                document.getElementById('service-title').value = service.title;
-                document.getElementById('service-description').value = service.description;
-                document.getElementById('service-icon').value = service.icon;
-                
-                document.getElementById('editing-service-id').value = serviceId;
-                serviceSubmitBtn.textContent = 'Update Service';
-                
-                serviceFormContainer.style.display = 'block';
-                servicesListContainer.style.display = 'none';
-            }
-        }
-
-        // Delete service
-        function deleteService(serviceId) {
-            if (confirm('Are you sure you want to delete this service?')) {
-                services = services.filter(s => s.id !== serviceId);
-                saveData();
-                renderAdminServicesList();
-                alert('Service deleted successfully!');
-            }
-        }
-
-        // Add or update service
-        serviceForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const serviceData = {
-                id: document.getElementById('editing-service-id').value || Date.now(),
-                title: document.getElementById('service-title').value,
-                description: document.getElementById('service-description').value,
-                icon: document.getElementById('service-icon').value || 'fas fa-cog'
-            };
-            
-            if (document.getElementById('editing-service-id').value) {
-                // Update existing service
-                const index = services.findIndex(s => s.id === parseInt(document.getElementById('editing-service-id').value));
-                if (index !== -1) {
-                    services[index] = serviceData;
+        // Auto-logout after 30 minutes of inactivity
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (adminDashboard.style.display === 'block') {
+                    alert('Session expired due to inactivity');
+                    window.location.href = 'admin.html';
                 }
-            } else {
-                // Add new service
-                services.push(serviceData);
-            }
-            
-            saveData();
-            renderAdminServicesList();
-            resetServiceForm();
-            serviceFormContainer.style.display = 'none';
-            servicesListContainer.style.display = 'block';
-            alert(`Service ${document.getElementById('editing-service-id').value ? 'updated' : 'added'} successfully!`);
-        });
-
-        // Initialize services list
-        renderAdminServicesList();
-
-        // Financing Management
-        const addFinancingBtn = document.getElementById('add-financing-btn');
-        const financingFormContainer = document.getElementById('financing-form-container');
-        const financingListContainer = document.getElementById('financing-list-container');
-        const financingForm = document.getElementById('financing-form');
-        const cancelFinancingForm = document.getElementById('cancel-financing-form');
-        const financingSubmitBtn = document.getElementById('financing-submit-btn');
-        const adminFinancingList = document.getElementById('admin-financing-list');
-
-        // Show financing form
-        addFinancingBtn.addEventListener('click', function() {
-            financingFormContainer.style.display = 'block';
-            financingListContainer.style.display = 'none';
-            resetFinancingForm();
-        });
-
-        // Cancel financing form
-        cancelFinancingForm.addEventListener('click', function() {
-            financingFormContainer.style.display = 'none';
-            financingListContainer.style.display = 'block';
-            resetFinancingForm();
-        });
-
-        // Reset financing form
-        function resetFinancingForm() {
-            financingForm.reset();
-            document.getElementById('editing-financing-id').value = '';
-            financingSubmitBtn.textContent = 'Add Option';
+            }, 30 * 60 * 1000); // 30 minutes
         }
 
-        // Render admin financing list
-        function renderAdminFinancingList() {
-            adminFinancingList.innerHTML = '';
-            
-            if (financingOptions.length === 0) {
-                adminFinancingList.innerHTML = '<p>No financing options added yet.</p>';
-                return;
-            }
-            
-            const table = document.createElement('table');
-            table.style.width = '100%';
-            table.style.borderCollapse = 'collapse';
-            table.innerHTML = `
-                <thead>
-                    <tr style="background: #f6f7f7; border-bottom: 1px solid #c3c4c7;">
-                        <th style="padding: 10px; text-align: left;">Option</th>
-                        <th style="padding: 10px; text-align: left;">Description</th>
-                        <th style="padding: 10px; text-align: left;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${financingOptions.map(option => `
-                        <tr style="border-bottom: 1px solid #f0f0f1;">
-                            <td style="padding: 10px;"><strong>${option.title}</strong></td>
-                            <td style="padding: 10px;">${option.description}</td>
-                            <td style="padding: 10px;">
-                                <button class="button button-primary edit-financing" data-id="${option.id}" style="padding: 5px 10px; font-size: 0.8rem;">Edit</button>
-                                <button class="button button-danger delete-financing" data-id="${option.id}" style="padding: 5px 10px; font-size: 0.8rem;">Delete</button>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            `;
-            
-            adminFinancingList.appendChild(table);
-            
-            // Add event listeners for edit and delete buttons
-            document.querySelectorAll('.edit-financing').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const financingId = parseInt(this.getAttribute('data-id'));
-                    editFinancing(financingId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-financing').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const financingId = parseInt(this.getAttribute('data-id'));
-                    deleteFinancing(financingId);
-                });
-            });
-        }
-
-        // Edit financing
-        function editFinancing(financingId) {
-            const option = financingOptions.find(f => f.id === financingId);
-            if (option) {
-                document.getElementById('financing-title').value = option.title;
-                document.getElementById('financing-description').value = option.description;
-                
-                document.getElementById('editing-financing-id').value = financingId;
-                financingSubmitBtn.textContent = 'Update Option';
-                
-                financingFormContainer.style.display = 'block';
-                financingListContainer.style.display = 'none';
-            }
-        }
-
-        // Delete financing
-        function deleteFinancing(financingId) {
-            if (confirm('Are you sure you want to delete this financing option?')) {
-                financingOptions = financingOptions.filter(f => f.id !== financingId);
-                saveData();
-                renderAdminFinancingList();
-                alert('Financing option deleted successfully!');
-            }
-        }
-
-        // Add or update financing
-        financingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const financingData = {
-                id: document.getElementById('editing-financing-id').value || Date.now(),
-                title: document.getElementById('financing-title').value,
-                description: document.getElementById('financing-description').value
-            };
-            
-            if (document.getElementById('editing-financing-id').value) {
-                // Update existing financing
-                const index = financingOptions.findIndex(f => f.id === parseInt(document.getElementById('editing-financing-id').value));
-                if (index !== -1) {
-                    financingOptions[index] = financingData;
-                }
-            } else {
-                // Add new financing
-                financingOptions.push(financingData);
-            }
-            
-            saveData();
-            renderAdminFinancingList();
-            resetFinancingForm();
-            financingFormContainer.style.display = 'none';
-            financingListContainer.style.display = 'block';
-            alert(`Financing option ${document.getElementById('editing-financing-id').value ? 'updated' : 'added'} successfully!`);
-        });
-
-        // Initialize financing list
-        renderAdminFinancingList();
-
-        // Settings form
-        document.getElementById('settings-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Settings saved successfully!');
-            // In a real application, you would save these settings to localStorage or a database
-        });
+        // Reset timer on user activity
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keypress', resetInactivityTimer);
+        resetInactivityTimer();
     </script>
 </body>
 </html>

@@ -14,10 +14,10 @@
         }
 
         :root {
-            --primary: #e74c3c; /* Solid Red */
-            --secondary: #000000; /* Solid Black */
-            --accent: #ffffff; /* Solid White */
-            --highlight: #f1c40f; /* Yellow */
+            --primary: #e74c3c;
+            --secondary: #000000;
+            --accent: #ffffff;
+            --highlight: #f1c40f;
             --light: #f9f9f9;
             --gray: #95a5a6;
         }
@@ -145,46 +145,6 @@
             background-color: #f39c12;
         }
 
-        .btn-sold {
-            background-color: var(--gray);
-        }
-
-        .btn-sold:hover {
-            background-color: #7f8c8d;
-        }
-
-        .btn-delete {
-            background-color: #c0392b;
-        }
-
-        .btn-delete:hover {
-            background-color: #a93226;
-        }
-
-        .btn-available {
-            background-color: #27ae60;
-        }
-
-        .btn-available:hover {
-            background-color: #229954;
-        }
-
-        .btn-edit {
-            background-color: #3498db;
-        }
-
-        .btn-edit:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-
-        .btn-secondary:hover {
-            background-color: #333;
-        }
-
         /* Search Section */
         .search-section {
             background-color: white;
@@ -308,133 +268,6 @@
             margin-bottom: 1rem;
         }
 
-        .car-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        /* Car Details Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 2rem auto;
-            width: 90%;
-            max-width: 1000px;
-            border-radius: 8px;
-            overflow: hidden;
-            animation: modalFade 0.3s;
-        }
-
-        @keyframes modalFade {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .modal-header h2 {
-            color: white;
-            margin: 0;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            padding: 2rem;
-        }
-
-        .modal-image {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .modal-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .modal-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .modal-specs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .spec-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .spec-label {
-            font-weight: 600;
-            color: var(--secondary);
-        }
-
-        .spec-value {
-            color: var(--gray);
-        }
-
-        .modal-description {
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
         /* Services Section */
         .services {
             background-color: var(--light);
@@ -467,69 +300,10 @@
             transform: translateY(-5px);
         }
 
-        .service-placeholder {
-            color: var(--gray);
-            font-style: italic;
-        }
-
         .service-icon {
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 1rem;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 4rem 0;
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonial {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            display: none;
-        }
-
-        .testimonial.active {
-            display: block;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--highlight);
-        }
-
-        .slider-controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-
-        .slider-dot.active {
-            background-color: var(--highlight);
         }
 
         /* Footer */
@@ -579,33 +353,6 @@
             color: #aaa;
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--gray);
-            font-style: italic;
-        }
-
-        /* Hidden Admin Link */
-        .admin-access {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--secondary);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .admin-access:hover {
-            background: var(--primary);
-        }
-
         /* Page Sections */
         .page-section {
             display: none;
@@ -615,6 +362,14 @@
 
         .page-section.active {
             display: block;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+            font-style: italic;
         }
 
         /* Responsive Design */
@@ -674,25 +429,10 @@
             .cars-grid {
                 grid-template-columns: 1fr;
             }
-
-            .car-actions {
-                flex-direction: column;
-            }
-
-            .modal-body {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-actions {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Admin Access Link -->
-    <a href="admin.html" class="admin-access">Admin Dashboard</a>
-
     <!-- Header -->
     <header>
         <div class="container header-container">
@@ -732,21 +472,21 @@
                     <div class="search-box">
                         <select id="make-filter">
                             <option value="">All Makes</option>
-                            <option value="audi">Audi</option>
-                            <option value="bmw">BMW</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="toyota">Toyota</option>
-                            <option value="honda">Honda</option>
-                            <option value="ford">Ford</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Mercedes">Mercedes</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Ford">Ford</option>
                         </select>
                     </div>
                     <div class="search-box">
                         <select id="model-filter">
                             <option value="">All Models</option>
-                            <option value="sedan">Sedan</option>
-                            <option value="suv">SUV</option>
-                            <option value="coupe">Coupe</option>
-                            <option value="convertible">Convertible</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Coupe">Coupe</option>
+                            <option value="Convertible">Convertible</option>
                         </select>
                     </div>
                     <div class="search-box">
@@ -828,12 +568,12 @@
             <div style="max-width: 800px; margin: 0 auto;">
                 <div class="service-card">
                     <h3>Our Mission</h3>
-                    <p class="service-placeholder">Add mission</p>
+                    <p>To provide quality vehicles with exceptional customer service, making car ownership accessible to everyone.</p>
                 </div>
                 
                 <div class="service-card" style="margin-top: 2rem;">
                     <h3>Why Choose Us?</h3>
-                    <p class="service-placeholder">Add reasons</p>
+                    <p>• Quality pre-owned vehicles<br>• Competitive pricing<br>• Flexible financing options<br>• Expert after-sales support</p>
                 </div>
             </div>
         </div>
@@ -848,7 +588,7 @@
                     <h3>Contact Information</h3>
                     <p><strong>Phone:</strong> 0786196676</p>
                     <p><strong>Email:</strong> aleemcarsales1@gmail.com</p>
-                    <p><strong>Business Hours:</strong> (Business Hours)</p>
+                    <p><strong>Business Hours:</strong> Mon-Fri: 9am-6pm, Sat: 9am-2pm</p>
                 </div>
                 <div class="service-card">
                     <h3>Get In Touch</h3>
@@ -858,19 +598,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Car Details Modal -->
-    <div class="modal" id="car-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-car-title">Car Details</h2>
-                <button class="close-modal" id="close-modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Modal content will be loaded here -->
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -894,7 +621,7 @@
                     <ul>
                         <li>Phone: 0786196676</li>
                         <li>Email: aleemcarsales1@gmail.com</li>
-                        <li>Business Hours: (Business Hours)</li>
+                        <li>Business Hours: Mon-Fri: 9am-6pm, Sat: 9am-2pm</li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -916,17 +643,17 @@
         // Load data from localStorage or use defaults
         let cars = JSON.parse(localStorage.getItem('aleemCars')) || [];
         let services = JSON.parse(localStorage.getItem('aleemServices')) || [
-            { id: 1, title: "Add", description: "Add services", icon: "fas fa-cog" },
-            { id: 2, title: "Add", description: "Add services", icon: "fas fa-cog" },
-            { id: 3, title: "Add", description: "Add services", icon: "fas fa-cog" },
-            { id: 4, title: "Add", description: "Add services", icon: "fas fa-cog" }
+            { id: 1, title: "Car Sales", description: "Wide selection of quality pre-owned vehicles", icon: "🚗" },
+            { id: 2, title: "Financing", description: "Flexible payment plans and loan assistance", icon: "💰" },
+            { id: 3, title: "Vehicle Service", description: "Professional maintenance and repairs", icon: "🔧" },
+            { id: 4, title: "Test Drives", description: "Schedule a test drive at your convenience", icon: "🎯" }
         ];
         
         let financingOptions = JSON.parse(localStorage.getItem('aleemFinancing')) || [
-            { id: 1, title: "Add", description: "Add financing options" },
-            { id: 2, title: "Add", description: "Add financing options" },
-            { id: 3, title: "Add", description: "Add financing options" },
-            { id: 4, title: "Add", description: "Add financing options" }
+            { id: 1, title: "Bank Financing", description: "Partnered with major banks for competitive rates" },
+            { id: 2, title: "In-House Financing", description: "Flexible payment plans tailored to your budget" },
+            { id: 3, title: "Trade-In Options", description: "Get the best value for your current vehicle" },
+            { id: 4, title: "Insurance", description: "Comprehensive insurance packages available" }
         ];
 
         // DOM Elements
@@ -938,10 +665,6 @@
         const searchBtn = document.getElementById('search-btn');
         const navLinks = document.querySelectorAll('.nav-link');
         const pageSections = document.querySelectorAll('.page-section');
-        const carModal = document.getElementById('car-modal');
-        const closeModal = document.getElementById('close-modal');
-        const modalCarTitle = document.getElementById('modal-car-title');
-        const modalBody = document.getElementById('modal-body');
 
         // Mobile Menu Toggle
         document.querySelector('.mobile-menu').addEventListener('click', function() {
@@ -975,49 +698,6 @@
             return 'R' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        // Show car details in modal
-        function showCarDetails(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (car) {
-                modalCarTitle.textContent = `${car.make} ${car.model}`;
-                modalBody.innerHTML = `
-                    <div class="modal-image">
-                        <img src="${car.image || ''}" alt="${car.make} ${car.model}">
-                    </div>
-                    <div class="modal-details">
-                        <div class="modal-price">${formatPrice(car.price)}</div>
-                        <div class="modal-specs">
-                            <div class="spec-item">
-                                <span class="spec-label">Year</span>
-                                <span class="spec-value">${car.year}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Mileage</span>
-                                <span class="spec-value">${car.mileage}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Transmission</span>
-                                <span class="spec-value">${car.transmission}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Status</span>
-                                <span class="spec-value" style="color: ${car.status === 'available' ? '#27ae60' : '#e74c3c'}">${car.status === 'available' ? 'Available' : 'Sold'}</span>
-                            </div>
-                        </div>
-                        <div class="modal-description">
-                            <h4>Description</h4>
-                            <p>${car.description || 'No description available.'}</p>
-                        </div>
-                        <div class="modal-actions">
-                            <button class="btn btn-highlight">Contact Us</button>
-                            <button class="btn">Schedule Test Drive</button>
-                        </div>
-                    </div>
-                `;
-                carModal.style.display = 'block';
-            }
-        }
-
         // Render cars to the page
         function renderCars(carsToRender, container) {
             container.innerHTML = '';
@@ -1033,7 +713,7 @@
                 carCard.innerHTML = `
                     ${car.status === 'sold' ? '<div class="sold-badge">SOLD</div>' : ''}
                     <div class="car-image">
-                        ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}">` : 'Add Car Image'}
+                        ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}">` : '🚗 Car Image'}
                     </div>
                     <div class="car-details">
                         <h3 class="car-title">${car.make} ${car.model}</h3>
@@ -1043,28 +723,10 @@
                             <span>${car.transmission}</span>
                         </div>
                         <div class="car-price">${formatPrice(car.price)}</div>
-                        <p>${car.description || 'Click for more details...'}</p>
-                        <button class="btn view-details" data-id="${car.id}">View Details</button>
+                        <p>${car.description || 'Excellent condition. Low mileage. Full service history.'}</p>
                     </div>
                 `;
                 container.appendChild(carCard);
-            });
-
-            // Add event listeners for view details buttons
-            document.querySelectorAll('.view-details').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const carId = parseInt(this.getAttribute('data-id'));
-                    showCarDetails(carId);
-                });
-            });
-
-            // Add click event to car cards
-            document.querySelectorAll('.car-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const carId = parseInt(this.querySelector('.view-details').getAttribute('data-id'));
-                    showCarDetails(carId);
-                });
             });
         }
 
@@ -1076,9 +738,9 @@
                 const serviceCard = document.createElement('div');
                 serviceCard.className = 'service-card';
                 serviceCard.innerHTML = `
-                    <div class="service-icon">+</div>
+                    <div class="service-icon">${service.icon}</div>
                     <h3>${service.title}</h3>
-                    <p class="service-placeholder">${service.description}</p>
+                    <p>${service.description}</p>
                 `;
                 container.appendChild(serviceCard);
             });
@@ -1093,22 +755,11 @@
                 optionCard.className = 'service-card';
                 optionCard.innerHTML = `
                     <h3>${option.title}</h3>
-                    <p class="service-placeholder">${option.description}</p>
+                    <p>${option.description}</p>
                 `;
                 container.appendChild(optionCard);
             });
         }
-
-        // Car Modal
-        closeModal.addEventListener('click', function() {
-            carModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', function(e) {
-            if (e.target === carModal) {
-                carModal.style.display = 'none';
-            }
-        });
 
         // Search functionality
         searchBtn.addEventListener('click', function() {
