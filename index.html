@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEEM CAR SALES | The Home of Fine Rides</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #e74c3c; /* Solid Red */
+            --secondary: #000000; /* Solid Black */
+            --accent: #ffffff; /* Solid White */
+            --highlight: #f1c40f; /* Yellow */
+            --light: #f9f9f9;
+            --gray: #95a5a6;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .slogan {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--highlight);
+            margin-top: 0.2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: var(--highlight);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+            background-color: var(--secondary);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-highlight {
+            background-color: var(--highlight);
+            color: var(--secondary);
+        }
+
+        .btn-highlight:hover {
+            background-color: #f39c12;
+        }
+
+        .btn-sold {
+            background-color: var(--gray);
+        }
+
+        .btn-sold:hover {
+            background-color: #7f8c8d;
+        }
+
+        .btn-delete {
+            background-color: #c0392b;
+        }
+
+        .btn-delete:hover {
+            background-color: #a93226;
+        }
+
+        .btn-available {
+            background-color: #27ae60;
+        }
+
+        .btn-available:hover {
+            background-color: #229954;
+        }
+
+        .btn-edit {
+            background-color: #3498db;
+        }
+
+        .btn-edit:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+        }
+
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box select, .search-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Featured Cars */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .car-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .car-card.sold {
+            opacity: 0.7;
+        }
+
+        .sold-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--gray);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .car-image {
+            height: 200px;
+            width: 100%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .car-card:hover .car-image img {
+            transform: scale(1.05);
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .car-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .car-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Car Details Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: modalFade 0.3s;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .modal-header h2 {
+            color: white;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .modal-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .spec-value {
+            color: var(--gray);
+        }
+
+        .modal-description {
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--light);
+            padding: 4rem 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid transparent;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: var(--highlight);
+            transform: translateY(-5px);
+        }
+
+        .service-placeholder {
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 0;
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .testimonial.active {
+            display: block;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--highlight);
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .slider-dot.active {
+            background-color: var(--highlight);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--highlight);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--highlight);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* Hidden Admin Link */
+        .admin-access {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .admin-access:hover {
+            background: var(--primary);
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            padding: 4rem 0;
+            min-height: 50vh;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .car-actions {
+                flex-direction: column;
+            }
+
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Access Link -->
+    <a href="admin.html" class="admin-access">Admin Dashboard</a>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div>
+                <a href="#" class="logo">ALEEM <span>CAR SALES</span></a>
+                <div class="slogan">The Home of Fine Rides</div>
+            </div>
+            <div class="mobile-menu">☰</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-target="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-target="inventory">Inventory</a></li>
+                    <li><a href="#" class="nav-link" data-target="services">Services</a></li>
+                    <li><a href="#" class="nav-link" data-target="financing">Financing</a></li>
+                    <li><a href="#" class="nav-link" data-target="about">About</a></li>
+                    <li><a href="#" class="nav-link" data-target="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="page-section active">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="container">
+                <h1>Find Your Dream Car Today</h1>
+                <p>Explore our premium selection of new and pre-owned vehicles with the best deals and financing options.</p>
+                <a href="#" class="btn btn-highlight nav-link" data-target="inventory">Browse Inventory</a>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="container">
+                <div class="search-container">
+                    <div class="search-box">
+                        <select id="make-filter">
+                            <option value="">All Makes</option>
+                            <option value="audi">Audi</option>
+                            <option value="bmw">BMW</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="toyota">Toyota</option>
+                            <option value="honda">Honda</option>
+                            <option value="ford">Ford</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <select id="model-filter">
+                            <option value="">All Models</option>
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="coupe">Coupe</option>
+                            <option value="convertible">Convertible</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <select id="price-filter">
+                            <option value="">All Prices</option>
+                            <option value="0-150000">R100,000 - R150,000</option>
+                            <option value="150000-250000">R150,000 - R250,000</option>
+                            <option value="250000-350000">R250,000 - R350,000</option>
+                            <option value="350000-500000">R350,000 - R500,000</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <select id="status-filter">
+                            <option value="">All Status</option>
+                            <option value="available">Available</option>
+                            <option value="sold">Sold</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <button class="btn" id="search-btn">Search</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Cars -->
+        <section class="container">
+            <h2 class="section-title">Featured Vehicles</h2>
+            <div class="cars-grid" id="cars-container">
+                <!-- Cars will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Services Preview -->
+        <section class="services">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid" id="services-preview">
+                    <!-- Services will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Inventory Section -->
+    <section id="inventory" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Our Inventory</h2>
+            <div class="cars-grid" id="inventory-container">
+                <!-- Inventory cars will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid" id="services-container">
+                <!-- Services will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Financing Section -->
+    <section id="financing" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Financing Options</h2>
+            <div class="services-grid" id="financing-container">
+                <!-- Financing options will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="page-section">
+        <div class="container">
+            <h2 class="section-title">About ALEEM CAR SALES</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="service-card">
+                    <h3>Our Mission</h3>
+                    <p class="service-placeholder">Add mission</p>
+                </div>
+                
+                <div class="service-card" style="margin-top: 2rem;">
+                    <h3>Why Choose Us?</h3>
+                    <p class="service-placeholder">Add reasons</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Contact Information</h3>
+                    <p><strong>Phone:</strong> 0786196676</p>
+                    <p><strong>Email:</strong> aleemcarsales1@gmail.com</p>
+                    <p><strong>Business Hours:</strong> (Business Hours)</p>
+                </div>
+                <div class="service-card">
+                    <h3>Get In Touch</h3>
+                    <p>Have questions about our vehicles or services? Reach out to us and our team will be happy to assist you.</p>
+                    <p>We serve customers nationwide with delivery options available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Car Details Modal -->
+    <div class="modal" id="car-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-car-title">Car Details</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ALEEM CAR SALES</h3>
+                    <p>Your trusted partner for premium car sales and services.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-target="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-target="inventory">Inventory</a></li>
+                        <li><a href="#" class="nav-link" data-target="services">Services</a></li>
+                        <li><a href="#" class="nav-link" data-target="financing">Financing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Phone: 0786196676</li>
+                        <li>Email: aleemcarsales1@gmail.com</li>
+                        <li>Business Hours: (Business Hours)</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 ALEEM CAR SALES. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load data from localStorage or use defaults
+        let cars = JSON.parse(localStorage.getItem('aleemCars')) || [];
+        let services = JSON.parse(localStorage.getItem('aleemServices')) || [
+            { id: 1, title: "Add", description: "Add services", icon: "fas fa-cog" },
+            { id: 2, title: "Add", description: "Add services", icon: "fas fa-cog" },
+            { id: 3, title: "Add", description: "Add services", icon: "fas fa-cog" },
+            { id: 4, title: "Add", description: "Add services", icon: "fas fa-cog" }
+        ];
+        
+        let financingOptions = JSON.parse(localStorage.getItem('aleemFinancing')) || [
+            { id: 1, title: "Add", description: "Add financing options" },
+            { id: 2, title: "Add", description: "Add financing options" },
+            { id: 3, title: "Add", description: "Add financing options" },
+            { id: 4, title: "Add", description: "Add financing options" }
+        ];
+
+        // DOM Elements
+        const carsContainer = document.getElementById('cars-container');
+        const inventoryContainer = document.getElementById('inventory-container');
+        const servicesPreview = document.getElementById('services-preview');
+        const servicesContainer = document.getElementById('services-container');
+        const financingContainer = document.getElementById('financing-container');
+        const searchBtn = document.getElementById('search-btn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageSections = document.querySelectorAll('.page-section');
+        const carModal = document.getElementById('car-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalCarTitle = document.getElementById('modal-car-title');
+        const modalBody = document.getElementById('modal-body');
+
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+
+        // Navigation System
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('data-target');
+                
+                // Hide all sections
+                pageSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                document.getElementById(target).classList.add('active');
+                
+                // Close mobile menu if open
+                document.querySelector('nav').classList.remove('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Format price to R currency
+        function formatPrice(price) {
+            return 'R' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Show car details in modal
+        function showCarDetails(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                modalCarTitle.textContent = `${car.make} ${car.model}`;
+                modalBody.innerHTML = `
+                    <div class="modal-image">
+                        <img src="${car.image || ''}" alt="${car.make} ${car.model}">
+                    </div>
+                    <div class="modal-details">
+                        <div class="modal-price">${formatPrice(car.price)}</div>
+                        <div class="modal-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Year</span>
+                                <span class="spec-value">${car.year}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Mileage</span>
+                                <span class="spec-value">${car.mileage}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Transmission</span>
+                                <span class="spec-value">${car.transmission}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Status</span>
+                                <span class="spec-value" style="color: ${car.status === 'available' ? '#27ae60' : '#e74c3c'}">${car.status === 'available' ? 'Available' : 'Sold'}</span>
+                            </div>
+                        </div>
+                        <div class="modal-description">
+                            <h4>Description</h4>
+                            <p>${car.description || 'No description available.'}</p>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-highlight">Contact Us</button>
+                            <button class="btn">Schedule Test Drive</button>
+                        </div>
+                    </div>
+                `;
+                carModal.style.display = 'block';
+            }
+        }
+
+        // Render cars to the page
+        function renderCars(carsToRender, container) {
+            container.innerHTML = '';
+            
+            if (carsToRender.length === 0) {
+                container.innerHTML = '<div class="empty-state">No cars available. Add cars through the admin panel.</div>';
+                return;
+            }
+            
+            carsToRender.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = `car-card ${car.status === 'sold' ? 'sold' : ''}`;
+                carCard.innerHTML = `
+                    ${car.status === 'sold' ? '<div class="sold-badge">SOLD</div>' : ''}
+                    <div class="car-image">
+                        ${car.image ? `<img src="${car.image}" alt="${car.make} ${car.model}">` : 'Add Car Image'}
+                    </div>
+                    <div class="car-details">
+                        <h3 class="car-title">${car.make} ${car.model}</h3>
+                        <div class="car-specs">
+                            <span>${car.year}</span>
+                            <span>${car.mileage}</span>
+                            <span>${car.transmission}</span>
+                        </div>
+                        <div class="car-price">${formatPrice(car.price)}</div>
+                        <p>${car.description || 'Click for more details...'}</p>
+                        <button class="btn view-details" data-id="${car.id}">View Details</button>
+                    </div>
+                `;
+                container.appendChild(carCard);
+            });
+
+            // Add event listeners for view details buttons
+            document.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const carId = parseInt(this.getAttribute('data-id'));
+                    showCarDetails(carId);
+                });
+            });
+
+            // Add click event to car cards
+            document.querySelectorAll('.car-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const carId = parseInt(this.querySelector('.view-details').getAttribute('data-id'));
+                    showCarDetails(carId);
+                });
+            });
+        }
+
+        // Render services
+        function renderServices(servicesToRender, container) {
+            container.innerHTML = '';
+            
+            servicesToRender.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                serviceCard.innerHTML = `
+                    <div class="service-icon">+</div>
+                    <h3>${service.title}</h3>
+                    <p class="service-placeholder">${service.description}</p>
+                `;
+                container.appendChild(serviceCard);
+            });
+        }
+
+        // Render financing options
+        function renderFinancing(financingToRender, container) {
+            container.innerHTML = '';
+            
+            financingToRender.forEach(option => {
+                const optionCard = document.createElement('div');
+                optionCard.className = 'service-card';
+                optionCard.innerHTML = `
+                    <h3>${option.title}</h3>
+                    <p class="service-placeholder">${option.description}</p>
+                `;
+                container.appendChild(optionCard);
+            });
+        }
+
+        // Car Modal
+        closeModal.addEventListener('click', function() {
+            carModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === carModal) {
+                carModal.style.display = 'none';
+            }
+        });
+
+        // Search functionality
+        searchBtn.addEventListener('click', function() {
+            const makeFilter = document.getElementById('make-filter').value;
+            const modelFilter = document.getElementById('model-filter').value;
+            const priceFilter = document.getElementById('price-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            
+            let filteredCars = cars;
+            
+            if (makeFilter) {
+                filteredCars = filteredCars.filter(car => 
+                    car.make.toLowerCase() === makeFilter.toLowerCase()
+                );
+            }
+            
+            if (modelFilter) {
+                filteredCars = filteredCars.filter(car => 
+                    car.model.toLowerCase() === modelFilter.toLowerCase()
+                );
+            }
+            
+            if (priceFilter) {
+                const [min, max] = priceFilter.split('-').map(val => parseInt(val));
+                filteredCars = filteredCars.filter(car => 
+                    car.price >= min && car.price <= max
+                );
+            }
+            
+            if (statusFilter) {
+                filteredCars = filteredCars.filter(car => 
+                    car.status === statusFilter
+                );
+            }
+            
+            renderCars(filteredCars, carsContainer);
+        });
+
+        // Initial render
+        renderCars(cars, carsContainer);
+        renderCars(cars, inventoryContainer);
+        renderServices(services, servicesPreview);
+        renderServices(services, servicesContainer);
+        renderFinancing(financingOptions, financingContainer);
+    </script>
+</body>
+</html>
